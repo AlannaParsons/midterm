@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Available Dates Page</title>
+
+  <meta charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" />
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="/styles/calendar.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script defer src="/scripts/app.js"></script>
+  <script defer src="/scripts/calendar.js"></script>
+</head>
+
+<body>
+  <!-- Top nav bar (fixed) -->
+  <nav>
+    <span class="logo">ScheduleMe</span>
+
+    <button id="new-tweet-button">
+      <div>
+      <span class="bold">Write</span> a new tweet
+      </div>
+    </button>
+
+  </nav>
+
+  <!-- Page-specific (main) content here -->
+  <main>
+
+
+    <section id="side-bar">
+      <div class="date" id="display-date"> DATE </div>
+      <div class="date"> CALENDAR </div>
+
+      <div class="calendar-container">
+        <header class="calendar-header">
+          <p class="calendar-current-date"></p>
+          <div class="calendar-navigation">
+            <span id="calendar-prev"
+              class="material-symbols-rounded">
+              chevron_left
+            </span>
+            <span id="calendar-next"
+              class="material-symbols-rounded">
+              chevron_right
+            </span>
+          </div>
+        </header>
+
+        <div class="calendar-body">
+          <ul class="calendar-weekdays">
+            <li>S</li>
+            <li>M</li>
+            <li>T</li>
+            <li>W</li>
+            <li>T</li>
+            <li>F</li>
+            <li>S</li>
+          </ul>
+          <ul class="calendar-dates"></ul>
+        </div>
+      </div>
+
+    </section>
+
+
+
+    <section id="middle-bar">
+
+      <div class="dates-container">
+        <div></div>
+
+        <% for (let date of dates) { %>
+
+
+          <article class="date-container">
+            <header>
+              <span id="icon-name">
+                <!-- <%= date %> -->
+              </span>
+              <span id="account"> <%= date.year %> <%= date.month %>
+              </span>
+            </header>
+            <div class="content">
+            </div>
+            <footer>
+              <span></span>
+              <span id="icons">
+              </span>
+            </footer>
+          </article>
+        <% } %>
+          <!-- <header>
+            <span id="icon-name">
+              <img src = "${tweet.user.avatars}" alt = "<i class="fa-solid fa-user"></i>
+              ${tweet.user.name}
+            </span>
+            <span id="account"> ${tweet.user.handle} </span>
+          </header>
+          <div class="content">
+            ${tweet.content.text}
+          </div>
+          <footer>
+            <span>${timeago.format(tweet.created_at, 'en_US')}</span>
+            <span id="icons">
+              <i class="fa-solid fa-heart"></i>
+              <i class="fa-solid fa-flag"></i>
+              <i class="fa-solid fa-repeat"></i>
+            </span>
+          </footer> -->
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+  <footer id="primary-footer">
+    <button id="footer-button"> <i class="fa-solid fa-circle-chevron-up"></i> </button>
+  </footer>
+</body>
+
+</html>
+

@@ -2,5 +2,19 @@
 
 body,
 html {
+  display: flex;
   margin: 0;
+  width: 100%;
+
 }
+*, *:before, *:after {
+  border: 1px solid red;
+  box-sizing: inherit;
+}
+
+main {
+  display: flex;
+
+}
+
+

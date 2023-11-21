@@ -1,0 +1,57 @@
+/* Desktop styles */
+
+
+ /*
+
+ ADD SOME SPACING TO RIGHT OF HEADER
+ CHANGE ALL FONT SIZE AND PADDIG TO BE RESPONSIVE
+ @media all and (max-width: 600px){
+  .somthing {
+    width
+  }
+ } */
+@media only screen and (min-width: 1024px) {
+  nav {
+    /* width: 33.3%;
+    float: left; */
+
+    background-color: #4056A1;
+  }
+
+  #primary-header {
+    display: flex;
+    justify-self: flex-start;
+    /* padding-top: 160px; */
+    /* height: 25%;
+    width: 25%; */
+    color: #191818;
+    background-color: #d1a547;
+    align-items: center;
+    flex-direction: column;
+
+    background-image: url(http://www.transparenttextures.com/patterns/brick-wall.png);
+
+
+   }
+
+   main {
+    flex-direction: row;
+    align-content: flex-start;
+    margin-top: 5em;
+    justify-content: space-evenly;
+
+
+   }
+
+   section {
+    flex-grow: 1;
+   }
+
+
+/*
+  .main {
+    max-width: 1024px;
+    font-size: 16px;
+    margin: 0 auto;
+  } */
+}
