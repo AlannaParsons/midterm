@@ -49,11 +49,38 @@ USER STORIES
 * As secondary user I want to recieve available dates/times and be able to schedule these days/times with primary user
 
 BUGS
-- user can click days of previous month, but registers as current month (dont show previous days??)
+- user can click days of previous month, but registers as current month (dont add click to class "invalid" days )
 
 CURRENT
-- calendar dates change color when selected (not deselected)
--use temp mem to reselect dates when traversing months
-- set up submit button on primary picker to send to database
--... work on database
-- create date restriction on picker
+
+- file organization.
+  - seperate frontend and backend helpers
+  - split "userqueries", serverqueries??
+  - do all routes need seperate files?
+  - clean up example files
+  - renames for consistancy (follow 'views' file naming convensions)
+    - scss full screen/responsive naming? or seperate folder?
+
+**- ADD functionality?
+  - add time to dates as well
+  - could we send to multiple people and aggrigate results? useful?s
+  - add schedule event types (date, appointment, meal, etc.)
+
+primary
+  - calendar dates change color when selected (not deselected)
+  - create date restriction on picker
+  - attach id to data sent to secondary user to help identify secondary user when data returned??
+secondary
+  - error handling for invalid schedule url
+  - user will click date, w cause popup (? maybe)
+  - pop up will contain post button
+  - once date is selected redirect to thank you page
+  - how to return selected date to primary user
+  - set up new page for this? complete schedule??
+  - how to make dates clickable since they are rendered w ejs
+      - OR move to script & render?
+  - pass id back to primary to log date??
+  - not started...
+
+ADDRESS
+  - typing. control data as it moves around. make plan for when date should be OBJ (in database) and when it should be DATE type (all server and front end use) TIME STAMP. make helpers

@@ -27,8 +27,6 @@ router.post("/", async function(req, res) {
     //rem to set cookie
     //req.session.user_id = cookie
 
-    console.log("testing123:",randomURL)
-
     //currently cookie is user name, will change to random id?
     // async .then?
     function addUser(){
@@ -36,11 +34,9 @@ router.post("/", async function(req, res) {
 
     }
 
-    //questions: do you call await w ()? how to get variable this way
     const id = await addUser()
 
-
-
+    //new user added create new schedule then add dates w schedule id
     let schedule_id = await userQueries.addSchedule(id, randomURL);
     for (let dateStr of req.body.dates) {
       var date = new Date(dateStr);

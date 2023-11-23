@@ -33,6 +33,8 @@ const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
 const userAcceptRoutes = require('./routes/accept_dates');
 const pickerRoutes = require('./routes/date_picker');
+//not necessary?
+const home = require('./routes/schedule');
 
 
 // Mount all resource routes
@@ -44,6 +46,8 @@ app.use('/users', usersRoutes);
 app.use('/users', usersRoutes);
 app.use('/available', userAcceptRoutes);
 app.use('/primary', pickerRoutes);
+app.use('/', home);
+
 // Note: mount other resources here, using the same pattern above
 
 // Home page

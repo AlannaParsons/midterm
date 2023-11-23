@@ -12,8 +12,9 @@ $(() => {
   }
     //if <li class="inactive"> non clickable?????
   // get date of clicked, send to temp memory + add feedback to selected
-  var ul = document.getElementsByClassName("calendar-dates")[0];
-  ul.onclick = function(event) {
+  // FIX? do jquery?
+  var calDates = document.getElementsByClassName("calendar-dates")[0];
+  calDates.onclick = function(event) {
     var target = getEventTarget(event);
     //combine?
     let monthyear = document.getElementsByClassName("calendar-current-date")[0];
