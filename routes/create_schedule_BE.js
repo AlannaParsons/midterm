@@ -12,7 +12,7 @@ const userQueries = require("../db/queries/users");
 const helpers = require("../helpers/helpers");
 
 router.get('/', (req, res) => {
-  res.render('primary_picker');
+  res.render('create_schedule');
 });
 
 //why is data a key?!
@@ -40,7 +40,7 @@ router.post("/", async function(req, res) {
     let schedule_id = await userQueries.addSchedule(id, randomURL);
     for (let dateStr of req.body.dates) {
       var date = new Date(dateStr);
-      console.log('req body dates inside datepicker', typeof date, date instanceof Date)
+      console.log('req body dates inside create schedule', typeof date, date instanceof Date)
       userQueries.addDates(date.getDate(), date.getMonth(), date.getFullYear(), schedule_id);
 
     }

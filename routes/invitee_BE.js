@@ -39,11 +39,18 @@ router.get('/:uniq_url', async function (req, res) {
   };
 
 
-  res.render('secondary_select', templateVars)
+  res.render('invitee', templateVars)
 
 });
 
-router.post("/", async function(req, res) {
+
+//expecting secondary user to send requested date here
+//are you posting 3 times? like a whore?!
+router.post("/", function(req, res) {
+  console.log('post i n invitee be')
+  console.log('recieved:',req.body.accepted_date)
+  res.status(201).send();
+  return;
 })
 
 

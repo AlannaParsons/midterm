@@ -31,10 +31,12 @@ app.use(express.static('public'));
 const userApiRoutes = require('./routes/users-api');
 const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
-const userAcceptRoutes = require('./routes/accept_dates');
-const pickerRoutes = require('./routes/date_picker');
+//used
+const userAcceptRoutes = require('./routes/invitee_BE');
+const pickerRoutes = require('./routes/create_schedule_BE');
+const userRedirectRoute = require('./routes/base_BE');
 //not necessary?
-const home = require('./routes/schedule');
+const home = require('./routes/schedule_BE');
 
 
 // Mount all resource routes
@@ -44,9 +46,10 @@ app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/users', usersRoutes);
-app.use('/available', userAcceptRoutes);
+// used
+app.use('/secondary', userAcceptRoutes);
+app.use('/base', userRedirectRoute);
 app.use('/primary', pickerRoutes);
-app.use('/', home);
 
 // Note: mount other resources here, using the same pattern above
 

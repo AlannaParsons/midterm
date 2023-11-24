@@ -69,17 +69,18 @@ CURRENT
 primary
   - calendar dates change color when selected (not deselected)
   - create date restriction on picker
-  - attach id to data sent to secondary user to help identify secondary user when data returned??
+  x attach id to data sent to secondary user to help identify secondary user when data returned?? (use date id)
 secondary
   - error handling for invalid schedule url
-  - user will click date, w cause popup (? maybe)
-  - pop up will contain post button
-  - once date is selected redirect to thank you page
-  - how to return selected date to primary user
+  x user will click date, w cause popup (? maybe)
+  x pop up will contain post button
+  x once date is selected redirect to thank you page
+    - account for page reload?? avoid resend
+  x how to return selected date to primary user
   - set up new page for this? complete schedule??
-  - how to make dates clickable since they are rendered w ejs
-      - OR move to script & render?
-  - pass id back to primary to log date??
+  x how to make dates clickable since they are rendered w ejs
+  x pass id back to primary to log date??
+schedule
   - not started...
 
 ADDRESS

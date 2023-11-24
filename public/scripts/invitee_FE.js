@@ -32,11 +32,19 @@ $(() => {
     //how to pull in date id?
     $.ajax({
       method: "POST",
-      url: "/",
-      data: {accepted_date: date_id}
+      url: "/secondary",
+      data: {accepted_date: date_id},
+      success: function(data) {
+        console.log('inside post success', data)
+        //data is html page
+        window.location.replace('/base');
+     }
       //does ajax do success: ?
+      //redirect upon post??? good practice?
+
+
     })
-    res.redirect('thanks');
+
 
   })
 
