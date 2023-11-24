@@ -1,4 +1,5 @@
 //https://stackoverflow.com/questions/16209145/how-can-i-set-cookie-in-node-js-using-express-framework
+// access w cookieName
 
 function cookieMiddleware(req, res, next) {
   console.log('cookie middleware');

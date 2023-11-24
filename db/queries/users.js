@@ -16,14 +16,37 @@ const db = require('../connection');
  * @return {Promise<{}>} A promise to the user.
  *
  */
- const addUser = function (username) {
+ const addUser = function (username, id) {
 
   return db
-  .query(`INSERT INTO users (name)
-          VALUES ($1)
-          RETURNING id;`, [username])
+  .query(`INSERT INTO users (id, name)
+          VALUES ($1, $2)
+          RETURNING id;`, [id, username])
   .then((result) => {
     console.log('user add?:',result.rows[0].id);
+    return result.rows[0].id;
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+
+};
+
+/**
+ * const existingUser = function (schedule)
+ * may not be needed.... revisit
+ * @param {string} user_id
+ * @return {Promise<{}>} A promise to the user.
+ *
+ */
+ const existingUser = function (user_cookie) {
+
+  return db
+  .query(`SELECT * FROM schedules
+          WHERE user_cookie = ($1)
+          ;`, [user_cookie])
+  .then((result) => {
+    console.log('user exists?:',result.rows[0]);
     return result.rows[0].id;
   })
   .catch((err) => {
@@ -44,7 +67,7 @@ const db = require('../connection');
  const addSchedule = function (user, url) {
 
   return db
-  .query(`INSERT INTO schedules (user_id, url)
+  .query(`INSERT INTO schedules (user_cookie, url)
           VALUES ($1, $2)
           RETURNING id;`, [user, url])
   .then((result) => {
@@ -64,12 +87,12 @@ const db = require('../connection');
  * @return {Promise<{}>} A promise to the user.
  *
  */
- const addDates = function (day, month, year, sched_id) {
+ const addDates = function (utc, sched_id) {
 
   return db
-  .query(`INSERT INTO dates (day, month, year, schedule_id)
-          VALUES ($1, $2, $3, $4)
-          ;`, [day, month, year, sched_id])
+  .query(`INSERT INTO dates (utc, schedule_id)
+          VALUES ($1, $2)
+          ;`, [utc, sched_id])
   .then((result) => {
     //console.log('date add?:',result.rows[0]); return nothing rn
     return result.rows[0];
@@ -93,7 +116,7 @@ const db = require('../connection');
 
   return db
   .query(`SELECT id FROM schedules
-          WHERE url = ($1)
+          WHERE url LIKE ($1)
           ;`, [url])
   .then((result) => {
     console.log('schedule get?:',result.rows[0]);
@@ -129,4 +152,7 @@ const db = require('../connection');
 
 };
 
-module.exports = { addUser, addSchedule, addDates, getSchedule, getDates };
+module.exports = {
+  addUser, existingUser,
+  addSchedule, getSchedule,
+  addDates, getDates };

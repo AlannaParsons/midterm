@@ -13,6 +13,9 @@ const helpers = require("../helpers/helpers");
 
 router.get('/', (req, res) => {
   res.render('create_schedule');
+
+  //req.cookies.cookieName
+
 });
 
 //why is data a key?!
@@ -26,22 +29,23 @@ router.post("/", async function(req, res) {
 
     //rem to set cookie
     //req.session.user_id = cookie
+    //userQueries.existingUser(req.cookies.cookieName)
 
-    //currently cookie is user name, will change to random id?
-    // async .then?
-    function addUser(){
-      return userQueries.addUser(userIDcookie);
 
-    }
-
-    const id = await addUser()
+    //const id = await addUser()
+    const id = req.cookies.cookieName.toString();
+    console.log('cookie in create post be', id)
 
     //new user added create new schedule then add dates w schedule id
     let schedule_id = await userQueries.addSchedule(id, randomURL);
     for (let dateStr of req.body.dates) {
+      //date string should be utc here
       var date = new Date(dateStr);
       console.log('req body dates inside create schedule', typeof date, date instanceof Date)
-      userQueries.addDates(date.getDate(), date.getMonth(), date.getFullYear(), schedule_id);
+      userQueries.addDates(dateStr, schedule_id);
+
+
+
 
     }
 

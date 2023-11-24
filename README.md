@@ -78,6 +78,8 @@ primary
   - calendar dates change color when selected (not deselected)
   - create date restriction on picker
   x attach id to data sent to secondary user to help identify secondary user when data returned?? (use date id)
+  - after create schedule "submit" give url back to user. popup?
+  - main page -> set cookie = user ID (change database)
 secondary
   - error handling for invalid schedule url
   x user will click date, w cause popup (? maybe)
@@ -88,12 +90,13 @@ secondary
   - set up new page for this? complete schedule??
   x how to make dates clickable since they are rendered w ejs
   x pass id back to primary to log date??
-schedule
-  - not necessary... cut aggrigate schedule??
-  - add event dates
-  - add available dates to send to secondary user
-  - how to differentiate activities??
+  - check if user primary (primary cannot vote) => dif page?
+  - get name from secondary
+
 
 
 ## ADDRESS
   - typing. control data as it moves around. make plan for when date should be OBJ (in database) and when it should be DATE type (all server and front end use) TIME STAMP. make helpers
+  - if sending to multiple people, how do we knpw when pole is over?
+  - show in calendar? but times might make difficult? zoom into day?
+  - no login. app functions via cookies

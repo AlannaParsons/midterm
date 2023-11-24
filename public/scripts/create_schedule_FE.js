@@ -12,10 +12,10 @@ $(() => {
   }
     //if <li class="inactive"> non clickable?????
   // get date of clicked, send to temp memory + add feedback to selected
-  // FIX? do jquery?
-  var calDates = document.getElementsByClassName("calendar-dates")[0];
+  // FIX?! do jquery?
+  let calDates = document.getElementsByClassName("calendar-dates")[0];
   calDates.onclick = function(event) {
-    var target = getEventTarget(event);
+    let target = getEventTarget(event);
     //combine?
     let monthyear = document.getElementsByClassName("calendar-current-date")[0];
     let [month, year] = monthyear.innerHTML.split(' ');
@@ -23,18 +23,26 @@ $(() => {
     //  // convert "date string" into "date object"
     // does string layout matter?? turning into date
         let stringdate = `${month} ${target.innerHTML}, ${year}`;
-        alert(stringdate)
+
         var date = new Date(stringdate);
 
-    dates.push(date)
+    dates.push(date.toUTCString())
+    //strong components -> date -> utc
+    console.log('date:', date.toUTCString())
+    //alert()
 
-    //console.log('HOLD:',tempHold)
+    //PUSH UTC TO LIST
+        //Date.UTC(year, monthIndex, day, hour, minute, second, millisecond)
+
+      // var isoDateString = new Date().toISOString();
+      // console.log(isoDateString);
+      // d.toUTCString();
 
 
     target.setAttribute("style", "color: green;");
   };
 
-
+//then give user unique url to send
   $scheduleSubmit.on('click', (event) => {
     event.preventDefault();
 
@@ -43,7 +51,7 @@ $(() => {
     // create file for ajax??
     $.ajax({
         method: "POST",
-        url: "/primary",
+        url: "/primary/create",
         data: {dates: dates}
       })
       //untested
