@@ -5,6 +5,9 @@ require('dotenv').config();
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
+
+const { cookieMiddleware } = require('./middleware')
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -16,6 +19,8 @@ app.set('view engine', 'ejs');
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(cookieMiddleware);
 app.use(
   '/styles',
   sassMiddleware({
@@ -33,10 +38,10 @@ const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
 //used
 const userAcceptRoutes = require('./routes/invitee_BE');
-const pickerRoutes = require('./routes/create_schedule_BE');
+const createScheduleRoute = require('./routes/create_schedule_BE');
 const userRedirectRoute = require('./routes/base_BE');
 //not necessary?
-const home = require('./routes/schedule_BE');
+const schedule = require('./routes/schedule_BE');
 
 
 // Mount all resource routes
@@ -45,11 +50,11 @@ const home = require('./routes/schedule_BE');
 app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
-app.use('/users', usersRoutes);
 // used
 app.use('/secondary', userAcceptRoutes);
 app.use('/base', userRedirectRoute);
-app.use('/primary', pickerRoutes);
+app.use('/primary/create', createScheduleRoute);
+app.use('/primary', schedule);
 
 // Note: mount other resources here, using the same pattern above
 

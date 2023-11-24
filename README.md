@@ -43,23 +43,31 @@ https://www.geeksforgeeks.org/how-to-design-a-simple-calendar-using-javascript/
 
 
 
-USER STORIES
+## USER STORIES
 * As the primary user I want to select available days to send to    secondary user
 * As the primary user I want to select available times of days to send to secondary user
 * As secondary user I want to recieve available dates/times and be able to schedule these days/times with primary user
 
-BUGS
+
+primary user -> make schedule
+primary user -> send schedule
+secondary user -> recieve schedule options
+secondary user -> select option
+
+## BUGS
 - user can click days of previous month, but registers as current month (dont add click to class "invalid" days )
 
-CURRENT
+## CURRENT
 
 - file organization.
   - seperate frontend and backend helpers
   - split "userqueries", serverqueries??
-  - do all routes need seperate files?
   - clean up example files
-  - renames for consistancy (follow 'views' file naming convensions)
+  x renames for consistancy (follow 'views' file naming convensions)
     - scss full screen/responsive naming? or seperate folder?
+  - do all routes need seperate files?
+    - consolidate primary and secondary routes
+  - rename create schedule??? creating event, schedule already exists?? but this will change EVERYTHING
 
 **- ADD functionality?
   - add time to dates as well
@@ -81,7 +89,11 @@ secondary
   x how to make dates clickable since they are rendered w ejs
   x pass id back to primary to log date??
 schedule
-  - not started...
+  - not necessary... cut aggrigate schedule??
+  - add event dates
+  - add available dates to send to secondary user
+  - how to differentiate activities??
 
-ADDRESS
+
+## ADDRESS
   - typing. control data as it moves around. make plan for when date should be OBJ (in database) and when it should be DATE type (all server and front end use) TIME STAMP. make helpers
