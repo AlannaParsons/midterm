@@ -30,13 +30,18 @@ $(() => {
     event.preventDefault(); //necessary here?
     //send info back to primary user, add to schedule
     //how to pull in date id?
+    //create "ranked" functionality
+
+    //HARD CODED NAME COOKIE AND RANK
+    // need to send date_id, name, cookie, vote
     $.ajax({
       method: "POST",
       url: "/secondary",
-      data: {accepted_date: date_id},
+      data: {id: date_id, name: 'name', cookie: 'acookie', rank: 1},
       success: function(data) {
         console.log('inside post success', data)
-        //data is html page
+        //send to thank you page OR results page. secondary doesnt need results?
+
         window.location.replace('/base');
      }
       //does ajax do success: ?

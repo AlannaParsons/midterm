@@ -84,9 +84,8 @@
 
 
           <button data-id="<%= date.id %>" class="date-container" name="container">
-
-            <%= date.year %> <%= date.month %>
-
+<!-- need utc conversion gl -->
+            <%= date.utc %>
           </button>
         <% } %>
           <!-- <header>

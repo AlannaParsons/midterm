@@ -1,11 +1,10 @@
-<!-- basic page. could be used to send various message to user? only used by secondary select 'thank you '-->
-
+<!-- change page func. give results (to be used by primary. secondary allowed)-->
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <title>Schedule Page</title>
+  <title>Results Page</title>
 
   <meta charset="UTF-8" >
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
@@ -15,12 +14,11 @@
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
-  <link rel="stylesheet" href="/styles/full_screen_calendar.css" />
+  <link rel="stylesheet" href="/styles/calendar.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
 
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
-  <script defer src="/scripts/schedule_FE.js"></script>
   <script defer src="/scripts/calendar_FE.js"></script>
 </head>
 
@@ -31,62 +29,102 @@
 
     <button id="new-tweet-button">
       <div>
-      <span class="bold">Your schedule</span>
+      <span class="bold">Write</span> a new tweet
       </div>
     </button>
 
   </nav>
 
+  <!-- Page-specific (main) content here -->
   <main>
-    <!-- type="date" is not supported in Internet Explorer 11. -->
-    <form id="date-range-form">
-      <p>Date :</p>
-      <input type="date" id="datemax" name="datemax" max="1979-12-31"><br><br>
-      <p> - </p>
-      <input type="date" id="datemin" name="datemin" min="2000-01-02">
-    </form>
 
 
+    <section id="side-bar">
+      <div class="date" id="display-date"> DATE </div>
+      <div class="date"> CALENDAR </div>
 
-    <div class="date" id="display-date"> DATE </div>
-    <div class="date"> CALENDAR </div>
+      <div class="calendar-container">
+        <header class="calendar-header">
+          <p class="calendar-current-date"></p>
+          <div class="calendar-navigation">
+            <span id="calendar-prev"
+              class="material-symbols-rounded">
+              chevron_left
+            </span>
+            <span id="calendar-next"
+              class="material-symbols-rounded">
+              chevron_right
+            </span>
+          </div>
+        </header>
 
-    <div class="calendar-container">
-      <header class="calendar-header">
-        <p class="calendar-current-date"></p>
-        <div class="calendar-navigation">
-          <span id="calendar-prev"
-            class="material-symbols-rounded">
-            chevron_left
-          </span>
-          <span id="calendar-next"
-            class="material-symbols-rounded">
-            chevron_right
-          </span>
+        <div class="calendar-body">
+          <ul class="calendar-weekdays">
+            <li>S</li>
+            <li>M</li>
+            <li>T</li>
+            <li>W</li>
+            <li>T</li>
+            <li>F</li>
+            <li>S</li>
+          </ul>
+          <ul class="calendar-dates"></ul>
         </div>
-      </header>
-
-      <div class="calendar-body">
-        <ul class="calendar-weekdays">
-          <li>Sun</li>
-          <li>Mon</li>
-          <li>Tue</li>
-          <li>Wed</li>
-          <li>Thu</li>
-          <li>Fri</li>
-          <li>Sat</li>
-        </ul>
-        <ul class="calendar-dates"></ul>
       </div>
-    </div>
 
-  </section>
+    </section>
 
 
+
+    <section id="middle-bar">
+
+      <div class="dates-container">
+        <div></div>
+
+        <% for (let date of dates) { %>
+
+
+          <button data-id="<%= date.id %>" class="date-container" name="container">
+
+            <%= date.year %> <%= date.month %>
+
+          </button>
+        <% } %>
+          <!-- <header>
+            <span id="icon-name">
+              <img src = "${tweet.user.avatars}" alt = "<i class="fa-solid fa-user"></i>
+              ${tweet.user.name}
+            </span>
+            <span id="account"> ${tweet.user.handle} </span>
+          </header>
+          <div class="content">
+            ${tweet.content.text}
+          </div>
+          <footer>
+            <span>${timeago.format(tweet.created_at, 'en_US')}</span>
+            <span id="icons">
+              <i class="fa-solid fa-heart"></i>
+              <i class="fa-solid fa-flag"></i>
+              <i class="fa-solid fa-repeat"></i>
+            </span>
+          </footer> -->
+
+      </div>
+      <div class="popup">
+        the popup!
+        Schedule _ for <span id="popup-date"></span>
+        <button class="accept"> accept </button>
+        <button class="decline"> decline </button>
+      </div>
+
+    </section>
 
 
   </main>
 
+  <footer id="primary-footer">
+    <button id="footer-button"> <i class="fa-solid fa-circle-chevron-up"></i> </button>
+  </footer>
 </body>
 
 </html>

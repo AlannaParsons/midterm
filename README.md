@@ -67,7 +67,7 @@ secondary user -> select option
     - scss full screen/responsive naming? or seperate folder?
   - do all routes need seperate files?
     - consolidate primary and secondary routes
-  - rename create schedule??? creating event, schedule already exists?? but this will change EVERYTHING
+  x rename create schedule??? creating event, schedule already exists?? but this will change EVERYTHING
 
 **- ADD functionality?
   - add time to dates as well
@@ -79,7 +79,7 @@ primary
   - create date restriction on picker
   x attach id to data sent to secondary user to help identify secondary user when data returned?? (use date id)
   - after create schedule "submit" give url back to user. popup?
-  - main page -> set cookie = user ID (change database)
+  x main page -> set cookie = user ID (change database)
 secondary
   - error handling for invalid schedule url
   x user will click date, w cause popup (? maybe)
@@ -92,11 +92,15 @@ secondary
   x pass id back to primary to log date??
   - check if user primary (primary cannot vote) => dif page?
   - get name from secondary
+  - currently hard coded name, cookie and rank being sent to server/database, need to get info from user
 
 
 
 ## ADDRESS
-  - typing. control data as it moves around. make plan for when date should be OBJ (in database) and when it should be DATE type (all server and front end use) TIME STAMP. make helpers
+  x typing. control data as it moves around. make plan for when date should be OBJ (in database) and when it should be DATE type (all server and front end use) TIME STAMP. make helpers
+  full change to utc
   - if sending to multiple people, how do we knpw when pole is over?
+    must hold results, add to database
   - show in calendar? but times might make difficult? zoom into day?
   - no login. app functions via cookies
+  - can only vote once per cookie

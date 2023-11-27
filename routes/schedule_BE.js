@@ -13,7 +13,16 @@ const router  = express.Router();
 //const helpers = require("../helpers/helpers");
 
 router.get('/', (req, res) => {
-  res.render('schedule');
+//get reults from db to set up results page
+
+
+  const templateVars = {
+    dates: dates
+    //user: users[req.session.user_id]
+  };
+
+
+  res.render('schedule', templateVars);
 });
 
 

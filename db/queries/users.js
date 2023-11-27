@@ -103,6 +103,35 @@ const db = require('../connection');
 
 };
 
+/**
+ * const addResults = function (sched_id, voter_name, voter_cookie, vote)
+ *
+ * CREATE TABLE votes (
+  id SERIAL PRIMARY KEY NOT NULL,
+  schedule_id INTEGER REFERENCES schedules(id),
+  voter_name VARCHAR(255) NOT NULL,
+  voter_cookie VARCHAR(255) NOT NULL,
+  vote VARCHAR(255) NOT NULL
+ * @param {Date} date { day: '16', month: 'November', year: '2023', selected: 'true' }
+ * @return {Promise<{}>} A promise to the user.
+ *
+ */
+ const addVotes = function (date_id, name, cookie, vote) {
+
+  return db
+  .query(`INSERT INTO votes (date_id, voter_name, voter_cookie, rank)
+          VALUES ($1, $2, $3, $4)
+          ;`, [date_id, name, cookie, vote])
+  .then((result) => {
+    //console.log('results add',result.rows[0])
+    return result.rows[0];
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+
+};
+
 
 /**
  * USED BY SERVER -> not userqueries? seperate?
@@ -152,7 +181,31 @@ const db = require('../connection');
 
 };
 
+/**
+ * USED BY SERVER -> not userqueries? seperate?
+ *
+ * @param {string} url
+ * @return {Promise<{}>} A promise with schedule id given url
+ *
+ */
+ const getVotes = function (id) {
+
+  return db
+  .query(`SELECT * FROM votes
+          WHERE schedule_id LIKE ($1)
+          ;`, [id])
+  .then((result) => {
+    console.log('schedule get?:',result.rows[0]);
+    return result.rows[0];
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+
+};
+
 module.exports = {
   addUser, existingUser,
   addSchedule, getSchedule,
-  addDates, getDates };
+  addDates, getDates,
+  addVotes, getVotes };
