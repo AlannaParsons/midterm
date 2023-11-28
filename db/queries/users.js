@@ -172,7 +172,34 @@ const db = require('../connection');
           WHERE user_cookie LIKE ($1)
           ;`, [userCookie])
   .then((result) => {
-    console.log('schedule get?:',result.rows);
+    console.log('schedules get?:',result.rows);
+    return result.rows;
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+
+};
+
+/**
+ * USED BY SERVER -> not userqueries? seperate?
+ *
+ * get schdule id from database using url. load into html when given url?
+ * @param {string} url
+ * @return {Promise<{}>} A promise with schedule id given url
+ *
+ */
+ const joinScheduleDates = function (id) {
+
+  return db
+  .query(`SELECT
+          dates.id AS date_id, user_cookie, url, schedule_id, utc
+          FROM schedules
+          JOIN dates ON schedules.id = dates.schedule_id
+          WHERE schedule_id = ($1)
+          ;`, [id])
+  .then((result) => {
+    console.log('schedules w join?:',result.rows);
     return result.rows;
   })
   .catch((err) => {
@@ -230,6 +257,6 @@ const db = require('../connection');
 
 module.exports = {
   addUser, existingUser,
-  addSchedule, getSchedule, getScheduleByUser,
+  addSchedule, getSchedule, getScheduleByUser, joinScheduleDates,
   addDates, getDates,
   addVotes, getVotes };

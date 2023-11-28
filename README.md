@@ -81,6 +81,8 @@ primary
   - after create schedule "submit" give url back to user. popup?
   x main page -> set cookie = user ID (change database)
   -should we prevent primary user from voting?
+  - change primary user routes. aggrigate page branch -> create or results
+  - create aggrigate page
 secondary
   - error handling for invalid schedule url
   x user will click date, w cause popup (? maybe)
@@ -92,7 +94,7 @@ secondary
   x how to make dates clickable since they are rendered w ejs
   x pass id back to primary to log date??
   - check if user primary (primary cannot vote) => dif page?
-  - get name from secondary
+  x get name from secondary
   - currently hard coded name, cookie and rank being sent to server/database, need to get info from user
 
 
