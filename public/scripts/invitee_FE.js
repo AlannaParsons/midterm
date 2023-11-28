@@ -3,18 +3,43 @@
 $(() => {
   //date id to be sent to primary user once selected
   let date_id = null;
+  let click_count = 0;
+  let vals = [];
+  //let ranked_dates = [];
 
   //make date containers clickable, once click, give confirmation button
   $('.date-container').on('click', function(event) {
     event.preventDefault(); //necessary here?
 
+    click_count +=1;
+
    //give clicked date id
-    date_id = $(this).data("id");
+    //date_id = {[$(this).data("id")]: click_count};
+    date_id = $(this).data("id")
     // if we add other info to button.. no work (put into docs pls)
     let date_html = $(this).html();
     console.log('findingu:', date_id, date_html);
 //   // initial click -> pop up (like) event, which contains button -> THIS will control 'post'
+    //(this).removeAttr("selected")
+    //$(this).attr("selected","selected")
 
+    $(this).toggleClass('selected');
+    //check if selected of deselected. add or remove from data
+    let theClass = $(this).attr('class');
+    if (theClass.includes('selected')) {
+      vals.push(date_id);
+    } else {
+      let ind = vals.indexOf(date_id);
+      vals.splice(ind, 1);
+    }
+
+
+    //getValues();
+    //console.log('vals', vals)
+
+
+
+    //ranked_dates.push(date_id);
     //$('.popup').toggle("show"); toggle is smooth but less functional??
     $('.popup').css('display','flex');
 
@@ -26,31 +51,48 @@ $(() => {
 
   })
 
+  //opportunity for optomization. if rank is attached to date id, BE wouldnt need to access db
   $('.accept').on('click', function(event) {
     event.preventDefault(); //necessary here?
     //send info back to primary user, add to schedule
-    //how to pull in date id?
     //create "ranked" functionality
 
-    //HARD CODED NAME COOKIE AND RANK
-    // need to send date_id, name, cookie, vote
-    $.ajax({
-      method: "POST",
-      url: "/secondary",
-      data: {id: date_id, name: 'name', cookie: 'acookie', rank: 1},
-      success: function(data) {
-        console.log('inside post success', data)
-        //send to thank you page OR results page. secondary doesnt need results?
+    // $('.dates-container .date-container').each( function() {
+    //   console.log('b4',$(this).data('id'))
+    //   if (!$(this).attr('class').includes('selected')) {
+    //     console.log('NOT INCLUDED',$(this).data('id'))
 
-        window.location.replace('/base');
-     }
-      //does ajax do success: ?
-      //redirect upon post??? good practice?
+    //   }
+    //   //values.push($(this).data('id'));
+    // })
 
+      console.log('vals', vals)
 
-    })
+    //check name form here?
+    //document.getElementById("edName").required = true;
+    //user validation. seperate?
+    let arr = window.location.pathname.split('/')
+    let uniq_url = arr[arr.length - 1]
+    console.log('uniq?!',uniq_url)
+    // to string? .val() unsure
+    let username = $("#voter-name").val().trim()
+    if (username.length <= 0) {
+      alert("please enter name")
+    } else {
 
-
+     //values are ranked by postion in
+      $.ajax({
+        method: "POST",
+        url: `/secondary/${uniq_url}`,
+        data: {vals: vals, name: username},
+        success: function(data) {
+          console.log('inside post success', data)
+          //send to thank you page OR results page. secondary doesnt need results?
+          // put back after testing
+          //window.location.replace('/base');
+        }
+      })
+    }
   })
 
   $('.decline').on('click', function(event) {
@@ -59,9 +101,20 @@ $(() => {
     $('.popup').css('display','none');
   })
 
+  // <section id="middle-bar">
+  // <div class="dates-container">
+  //   <% for (let date of dates) { %>
+  //     <button data-id="<%= date.id %>" class="date-container" name="container">
 
+//helper. move out
+  function getValues() {
+    var values = [];
+    $('.dates-container .selected').each( function() {
+           values.push($(this).data('id'));
+    });
 
-
+    return values;
+}
 
 
 //     /**

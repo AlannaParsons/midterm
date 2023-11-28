@@ -26,11 +26,14 @@
   <nav>
     <span class="logo">ScheduleMe</span>
 
-    <button id="new-tweet-button">
-      <div>
-      <span class="bold">Write</span> a new tweet
-      </div>
-    </button>
+
+      <p>Required Attribute</p>
+
+    <!-- <form id="name-form" action="/secondary" method="POST"> -->
+      <label>Name:</label>
+      <input id="voter-name" type="text" name="user" placeholder="name" required />
+    <!-- </form> -->
+
 
   </nav>
 
@@ -111,7 +114,7 @@
       <div class="popup">
         the popup!
         Schedule _ for <span id="popup-date"></span>
-        <button class="accept"> accept </button>
+        <button class="accept" type="submit" form="name-form"> accept </button>
         <button class="decline"> decline </button>
       </div>
 

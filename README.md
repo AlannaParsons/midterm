@@ -80,6 +80,7 @@ primary
   x attach id to data sent to secondary user to help identify secondary user when data returned?? (use date id)
   - after create schedule "submit" give url back to user. popup?
   x main page -> set cookie = user ID (change database)
+  -should we prevent primary user from voting?
 secondary
   - error handling for invalid schedule url
   x user will click date, w cause popup (? maybe)

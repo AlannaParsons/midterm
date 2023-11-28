@@ -1,4 +1,4 @@
-<!-- aggrigate events page. primary only -->
+<!-- change page func. give results (to be used by primary. secondary allowed)-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +29,7 @@
 
     <button id="new-tweet-button">
       <div>
-      <span class="bold">all events page</span>
+      <span class="bold">Write</span> a new tweet
       </div>
     </button>
 
@@ -39,11 +39,46 @@
   <main>
 
 
+    <section id="side-bar">
+      <div class="date" id="display-date"> DATE </div>
+      <div class="date"> CALENDAR </div>
+
+      <div class="calendar-container">
+        <header class="calendar-header">
+          <p class="calendar-current-date"></p>
+          <div class="calendar-navigation">
+            <span id="calendar-prev"
+              class="material-symbols-rounded">
+              chevron_left
+            </span>
+            <span id="calendar-next"
+              class="material-symbols-rounded">
+              chevron_right
+            </span>
+          </div>
+        </header>
+
+        <div class="calendar-body">
+          <ul class="calendar-weekdays">
+            <li>S</li>
+            <li>M</li>
+            <li>T</li>
+            <li>W</li>
+            <li>T</li>
+            <li>F</li>
+            <li>S</li>
+          </ul>
+          <ul class="calendar-dates"></ul>
+        </div>
+      </div>
+
+    </section>
+
 
 
     <section id="middle-bar">
 
-      <div class="schedules-container">
+      <div class="dates-container">
         <div></div>
 
         <% for (let date of dates) { %>

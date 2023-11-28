@@ -160,6 +160,30 @@ const db = require('../connection');
 /**
  * USED BY SERVER -> not userqueries? seperate?
  *
+ * get schdule id from database using url. load into html when given url?
+ * @param {string} url
+ * @return {Promise<{}>} A promise with schedule id given url
+ *
+ */
+ const getScheduleByUser = function (userCookie) {
+
+  return db
+  .query(`SELECT * FROM schedules
+          WHERE user_cookie LIKE ($1)
+          ;`, [userCookie])
+  .then((result) => {
+    console.log('schedule get?:',result.rows);
+    return result.rows;
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+
+};
+
+/**
+ * USED BY SERVER -> not userqueries? seperate?
+ *
  * get dates to create schedule given id.
  * @param {string} schedule_id
  * @return {Promise<{}>} A promise to the user.
@@ -206,6 +230,6 @@ const db = require('../connection');
 
 module.exports = {
   addUser, existingUser,
-  addSchedule, getSchedule,
+  addSchedule, getSchedule, getScheduleByUser,
   addDates, getDates,
   addVotes, getVotes };
