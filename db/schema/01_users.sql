@@ -12,7 +12,7 @@
 
 DROP TABLE IF EXISTS schedules CASCADE;
 DROP TABLE IF EXISTS dates CASCADE;
-
+DROP TABLE IF EXISTS votes CASCADE;
 
 -- should schedules be array. possible? athena
 CREATE TABLE schedules (

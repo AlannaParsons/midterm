@@ -223,7 +223,7 @@ const db = require('../connection');
           WHERE schedule_id = ($1)
           ;`, [schedule_id])
   .then((result) => {
-    console.log('dates get?:',result.rows);
+    //console.log('dates get?:',result.rows);
     return result.rows;
   })
   .catch((err) => {
@@ -233,27 +233,57 @@ const db = require('../connection');
 };
 
 /**
- * USED BY SERVER -> not userqueries? seperate?
- *
+ * USED BY SERVER -> given schedule_id, get summed results for each vote on schedule
  * @param {string} url
  * @return {Promise<{}>} A promise with schedule id given url
- *
+ * left outer join??? revisit
+ * COALESCE(`R.P`, '0')
  */
- const getVotes = function (id) {
+ const getVotes = function (schedule_id) {
 
   return db
-  .query(`SELECT * FROM votes
-          WHERE schedule_id LIKE ($1)
-          ;`, [id])
+  .query(`SELECT SUM(votes.rank) AS result, dates.utc, dates.id AS dateid, dates.schedule_id FROM dates
+          LEFT OUTER JOIN votes ON dates.id = votes.date_id
+          WHERE schedule_id = ($1)
+          GROUP BY dates.id, dates.schedule_id
+          ORDER BY COALESCE(SUM(votes.rank), '0') DESC
+          ;`, [schedule_id])
   .then((result) => {
-    console.log('schedule get?:',result.rows[0]);
-    return result.rows[0];
+    console.log('votes get?:',result.rows);
+    return result.rows;
   })
   .catch((err) => {
     console.log(err.message);
   });
 
 };
+
+// /**
+//  * USED BY SERVER -> not userqueries? seperate?
+//  *
+//  * @param {string} url
+//  * @return {Promise<{}>} A promise with schedule id given url
+//  * SELECT, FROM/JOIN, WHERE, GROUP BY, HAVING, ORDER BY, then LIMIT)
+//  */
+//  const getVotes = function (schedule_id) {
+
+//   return db
+//   .query(`SELECT dates.id AS datesid, schedules.id AS schedids, SUM(votes.rank)
+//            results FROM dates
+//           JOIN votes ON dates.id = votes.date_id
+//           JOIN schedules ON schedules.id = dates.schedule_id
+//           WHERE schedule_id = ($1)
+//           GROUP BY schedules.id, dates.id
+//           ;`, [schedule_id])
+//   .then((result) => {
+//     console.log('votes get?:',result.rows[0]);
+//     return result.rows[0];
+//   })
+//   .catch((err) => {
+//     console.log(err.message);
+//   });
+
+// };
 
 module.exports = {
   addUser, existingUser,

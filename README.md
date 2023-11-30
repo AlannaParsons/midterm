@@ -56,6 +56,7 @@ secondary user -> select option
 
 ## BUGS
 - user can click days of previous month, but registers as current month (dont add click to class "invalid" days )
+-creating schedule is not wiping old data, upon submit must clear
 
 ## CURRENT
 
@@ -68,6 +69,7 @@ secondary user -> select option
   - do all routes need seperate files?
     - consolidate primary and secondary routes
   x rename create schedule??? creating event, schedule already exists?? but this will change EVERYTHING
+  - change route org. all primary in 1 file and all secondary.
 
 **- ADD functionality?
   - add time to dates as well

@@ -37,11 +37,11 @@ const userApiRoutes = require('./routes/users-api');
 const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
 //used
+const schedule = require('./routes/schedule_BE');
 const userAcceptRoutes = require('./routes/invitee_BE');
+const resultsRoutes = require('./routes/results_BE');
 const createScheduleRoute = require('./routes/create_schedule_BE');
 const userRedirectRoute = require('./routes/base_BE');
-//not necessary?
-const schedule = require('./routes/schedule_BE');
 
 
 // Mount all resource routes
@@ -51,10 +51,12 @@ app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 // used
+app.use('/primary', schedule);
 app.use('/secondary', userAcceptRoutes);
 app.use('/base', userRedirectRoute);
 app.use('/primary/create', createScheduleRoute);
-app.use('/primary', schedule);
+app.use('/primary/madeup', resultsRoutes);
+
 
 // Note: mount other resources here, using the same pattern above
 

@@ -29,7 +29,7 @@
 
     <button id="new-tweet-button">
       <div>
-      <span class="bold">Write</span> a new tweet
+      <span class="bold">Results</span>
       </div>
     </button>
 
@@ -80,13 +80,18 @@
 
       <div class="dates-container">
         <div></div>
+        <!-- sum: '6',
+        utc: 'Sun, 12 Nov 2023 07:00:00 GMT',
+        dateid: 1,
+        schedule_id: 1
+     -->
 
-        <% for (let date of dates) { %>
+        <% for (let result of results) { %>
 
 
-          <button data-id="<%= date.id %>" class="date-container" name="container">
+          <button class="date-container" name="container">
 
-            <%= date.year %> <%= date.month %>
+            <%= result.sum %> <%= result.utc %> <%= result.dateid%>
 
           </button>
         <% } %>
