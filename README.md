@@ -91,6 +91,7 @@ primary
   x add percentages to results? (just for user, not in data)
   - currently using percentage to render color, add more data for user??? chart?
   - add who has voted to results page
+  - add buttons to navigate create & results
 
 secondary
   - error handling for invalid schedule url

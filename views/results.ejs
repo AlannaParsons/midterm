@@ -82,17 +82,10 @@
 
       <div class="dates-container">
         <div></div>
-        <!-- sum: '6',
-        utc: 'Sun, 12 Nov 2023 07:00:00 GMT',
-        dateid: 1,
-        schedule_id: 1
-     -->
-
-
 
         <% for (let result of results) { %>
 
-          <button class="date-container" name="container" style="background-color:<%= result.style %>;"></button>>
+          <button class="date-container" name="container" style="background-color:<%= result.style %>;" >
 
             <%= result.sum %> <%= result.utc %> <%= result.dateid%>
 
