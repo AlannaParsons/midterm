@@ -232,65 +232,6 @@ const db = require('../connection');
 
 };
 
-/**
- * USED BY SERVER -> given schedule_id, get summed results for each date on schedule
- *
- *
- * @param {string} url
- * @return {Promise<{}>} A promise with schedule id given url
- * left outer join??? revisit
- * doesnt work w/o 2 COALESCE(SUM(votes.rank), '0')...... damn sql
- *
- */
- const getVotes = function (schedule_id) {
-
-  return db
-  .query(`SELECT COALESCE(SUM(votes.rank), '0') AS result, dates.utc, dates.id AS dateid, dates.schedule_id FROM dates
-          LEFT OUTER JOIN votes ON dates.id = votes.date_id
-          WHERE schedule_id = ($1)
-          GROUP BY dates.id, dates.schedule_id
-          ORDER BY COALESCE(SUM(votes.rank), '0') DESC
-          ;`, [schedule_id])
-  .then((result) => {
-    console.log('votes get?:',result.rows);
-    return result.rows;
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
-
-};
-
-// /**
-//  * USED BY SERVER -> given schedule_id, get summed results for each date on schedule
-//  *
-//  *
-//  * @param {string} url
-//  * @return {Promise<{}>} A promise with schedule id given url
-//  * left outer join??? revisit
-//  * doesnt work w/o 2 COALESCE(SUM(votes.rank), '0')...... damn sql
-//  *
-//  */
-//  const testGetVotes = function (schedule_id) {
-
-//   return db
-//   .query(`SELECT COALESCE(SUM(votes.rank), '0') AS result, dates.utc, dates.id AS dateid, dates.schedule_id,
-//             (SELECT SUM(votes.rank) FROM dates GROUP BY dates.schedule_id LIMIT 1) AS total
-//           FROM dates
-//           LEFT OUTER JOIN votes ON dates.id = votes.date_id
-//           WHERE schedule_id = ($1)
-//           GROUP BY dates.id, dates.schedule_id
-//           ORDER BY COALESCE(SUM(votes.rank), '0') DESC
-//           ;`, [schedule_id])
-//   .then((result) => {
-//     console.log('tesst votes get?:',result.rows);
-//     return result.rows;
-//   })
-//   .catch((err) => {
-//     console.log(err.message);
-//   });
-
-// };
 
 /**
  * USED BY SERVER -> given schedule_id, get summed results for each date on schedule
@@ -302,7 +243,7 @@ const db = require('../connection');
  * so ugly..... can i alias COALESCE(SUM(votes.rank), '0') sooner??
  * double check later that schedule id is filtering on both levels
  */
- const testGetVotes = function (schedule_id) {
+ const getVotes = function (schedule_id) {
 
   return db
   .query(`
@@ -329,33 +270,34 @@ const db = require('../connection');
 
 };
 
-// const testGetVotes = function (schedule_id) {
+/**
+ * USED BY SERVER ->
+ *
+ * @param {string} url
+ * @return {Promise<{}>} A promise with schedule id given url
+ * add DISTINCT? not necessary
+ */
+ const getVoters = function (schedule_id) {
 
-//   return db
-//   .query(` with made_up_ranks as (
-//     SELECT COALESCE(SUM(votes.rank), '0') as result
-//     FROM votes
-//     JOIN dates ON dates.id = votes.date_id
-//     WHERE schedule_id = ($1)
-//   )
-//     SELECT COALESCE(SUM(result), '0') AS total, dates.utc, dates.id AS dateid, dates.schedule_id
-//           FROM dates
-//           LEFT OUTER JOIN votes ON dates.id = votes.date_id
-//           WHERE schedule_id = ($1)
-//           GROUP BY dates.schedule_id
-//           ORDER BY COALESCE(SUM(votes.rank), '0') DESC
-//           ;`, [schedule_id])
-//   .then((result) => {
-//     console.log('tesst votes get?:',result.rows);
-//     return result.rows;
-//   })
-//   .catch((err) => {
-//     console.log(err.message);
-//   });
+  return db
+  .query(`SELECT voter_name FROM votes
+          JOIN dates ON dates.id = votes.date_id
+          WHERE dates.schedule_id = ($1)
+          GROUP BY voter_name
+          ;`, [schedule_id])
+  .then((result) => {
+    console.log('tesst votes get?:',result.rows);
+    return result.rows;
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
 
-// };
+};
+
 
 // /**
+//old version, doesnt pull percentage. still needd?
 //  * USED BY SERVER -> not userqueries? seperate?
 //  *
 //  * @param {string} url
@@ -386,4 +328,4 @@ module.exports = {
   addUser, existingUser,
   addSchedule, getSchedule, getScheduleByUser, joinScheduleDates,
   addDates, getDates,
-  addVotes, getVotes, testGetVotes };
+  addVotes, getVotes, getVoters };

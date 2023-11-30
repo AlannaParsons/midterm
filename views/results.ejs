@@ -41,7 +41,9 @@
 
     <section id="side-bar">
       <div class="date" id="display-date"> DATE </div>
-      <div class="date"> CALENDAR </div>
+      <% for (let voter of voters) { %>
+        <div class="date"> <%= voter.voter_name %> </div>
+      <% } %>
 
       <div class="calendar-container">
         <header class="calendar-header">

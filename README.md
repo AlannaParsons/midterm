@@ -88,8 +88,10 @@ primary
   -should we prevent primary user from voting?
   X change primary user routes. aggrigate page branch -> create or results (then do secondary??)
   x create aggrigate page
-  - add percentages to results? (just for user, not in data)
+  x add percentages to results? (just for user, not in data)
+  - currently using percentage to render color, add more data for user??? chart?
   - add who has voted to results page
+
 secondary
   - error handling for invalid schedule url
   x user will click date, w cause popup (? maybe)
