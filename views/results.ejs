@@ -86,10 +86,11 @@
         schedule_id: 1
      -->
 
+
+
         <% for (let result of results) { %>
 
-
-          <button class="date-container" name="container">
+          <button class="date-container" name="container" style="background-color:<%= result.style %>;"></button>>
 
             <%= result.sum %> <%= result.utc %> <%= result.dateid%>
 

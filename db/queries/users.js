@@ -233,16 +233,19 @@ const db = require('../connection');
 };
 
 /**
- * USED BY SERVER -> given schedule_id, get summed results for each vote on schedule
+ * USED BY SERVER -> given schedule_id, get summed results for each date on schedule
+ *
+ *
  * @param {string} url
  * @return {Promise<{}>} A promise with schedule id given url
  * left outer join??? revisit
- * COALESCE(`R.P`, '0')
+ * doesnt work w/o 2 COALESCE(SUM(votes.rank), '0')...... damn sql
+ *
  */
  const getVotes = function (schedule_id) {
 
   return db
-  .query(`SELECT SUM(votes.rank) AS result, dates.utc, dates.id AS dateid, dates.schedule_id FROM dates
+  .query(`SELECT COALESCE(SUM(votes.rank), '0') AS result, dates.utc, dates.id AS dateid, dates.schedule_id FROM dates
           LEFT OUTER JOIN votes ON dates.id = votes.date_id
           WHERE schedule_id = ($1)
           GROUP BY dates.id, dates.schedule_id
@@ -257,6 +260,100 @@ const db = require('../connection');
   });
 
 };
+
+// /**
+//  * USED BY SERVER -> given schedule_id, get summed results for each date on schedule
+//  *
+//  *
+//  * @param {string} url
+//  * @return {Promise<{}>} A promise with schedule id given url
+//  * left outer join??? revisit
+//  * doesnt work w/o 2 COALESCE(SUM(votes.rank), '0')...... damn sql
+//  *
+//  */
+//  const testGetVotes = function (schedule_id) {
+
+//   return db
+//   .query(`SELECT COALESCE(SUM(votes.rank), '0') AS result, dates.utc, dates.id AS dateid, dates.schedule_id,
+//             (SELECT SUM(votes.rank) FROM dates GROUP BY dates.schedule_id LIMIT 1) AS total
+//           FROM dates
+//           LEFT OUTER JOIN votes ON dates.id = votes.date_id
+//           WHERE schedule_id = ($1)
+//           GROUP BY dates.id, dates.schedule_id
+//           ORDER BY COALESCE(SUM(votes.rank), '0') DESC
+//           ;`, [schedule_id])
+//   .then((result) => {
+//     console.log('tesst votes get?:',result.rows);
+//     return result.rows;
+//   })
+//   .catch((err) => {
+//     console.log(err.message);
+//   });
+
+// };
+
+/**
+ * USED BY SERVER -> given schedule_id, get summed results for each date on schedule
+ *
+ *
+ * @param {string} url
+ * @return {Promise<{}>} A promise with schedule id given url
+ * left outer join??? revisit
+ * so ugly..... can i alias COALESCE(SUM(votes.rank), '0') sooner??
+ * double check later that schedule id is filtering on both levels
+ */
+ const testGetVotes = function (schedule_id) {
+
+  return db
+  .query(`
+          SELECT COALESCE(SUM(votes.rank), '0') AS results, dates.utc,
+            dates.id AS dateid, dates.schedule_id,
+            (COALESCE(SUM(votes.rank), '0')* 100/t.total ) AS percentage
+            FROM ((SELECT SUM(rank) as total
+              FROM votes
+              LEFT OUTER JOIN dates ON dates.id = votes.date_id
+              WHERE dates.schedule_id = ($1))) AS t,
+           dates
+          LEFT OUTER JOIN votes ON dates.id = votes.date_id
+          WHERE schedule_id = ($1)
+          GROUP BY dates.schedule_id, dates.id, t.total
+          ORDER BY COALESCE(SUM(votes.rank), '0') DESC
+          ;`, [schedule_id])
+  .then((result) => {
+    console.log('tesst votes get?:',result.rows);
+    return result.rows;
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+
+};
+
+// const testGetVotes = function (schedule_id) {
+
+//   return db
+//   .query(` with made_up_ranks as (
+//     SELECT COALESCE(SUM(votes.rank), '0') as result
+//     FROM votes
+//     JOIN dates ON dates.id = votes.date_id
+//     WHERE schedule_id = ($1)
+//   )
+//     SELECT COALESCE(SUM(result), '0') AS total, dates.utc, dates.id AS dateid, dates.schedule_id
+//           FROM dates
+//           LEFT OUTER JOIN votes ON dates.id = votes.date_id
+//           WHERE schedule_id = ($1)
+//           GROUP BY dates.schedule_id
+//           ORDER BY COALESCE(SUM(votes.rank), '0') DESC
+//           ;`, [schedule_id])
+//   .then((result) => {
+//     console.log('tesst votes get?:',result.rows);
+//     return result.rows;
+//   })
+//   .catch((err) => {
+//     console.log(err.message);
+//   });
+
+// };
 
 // /**
 //  * USED BY SERVER -> not userqueries? seperate?
@@ -289,4 +386,4 @@ module.exports = {
   addUser, existingUser,
   addSchedule, getSchedule, getScheduleByUser, joinScheduleDates,
   addDates, getDates,
-  addVotes, getVotes };
+  addVotes, getVotes, testGetVotes };

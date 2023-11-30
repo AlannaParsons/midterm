@@ -102,10 +102,24 @@ router.get('/:uniq_url', async function (req, res) {
 
   // array of date objs
   const dates = await userQueries.getDates(schdule_id.id);
-  const votes = await userQueries.getVotes(schdule_id.id);
+  //const votes = await userQueries.getVotes(schdule_id.id);
+  const votes= await userQueries.testGetVotes(schdule_id.id);
   // turn dates into date types??
-  //console.log('BE. prim. get uniq id',votes)
+
+
+  for (let vote of votes){
+    //add color to vote?  pickHex(color1, color2, weight)
+    let colors = ['red', 'blue', 'green']
+
+    vote['style'] = helpers.perc2color(vote.percentage)
+    console.log('BE. prim. get uniq id',votes.length, helpers.perc2color(vote.percentage))
+
+  }
+//get percentages for ranks
+
+
   // for (let date of dates) {
+    //sum = arr.reduce(function (a, b) {return a + b;}, 0);
 
   //   const votes = await userQueries.getVotes(date.id);
   //   console.log("date:", date, votes)

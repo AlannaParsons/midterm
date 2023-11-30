@@ -40,6 +40,9 @@ This is a scheduling app where in a primary user will set their schedule (for sp
 
 Calendar -
 https://www.geeksforgeeks.org/how-to-design-a-simple-calendar-using-javascript/
+color gradient -
+https://gist.github.com/mlocati/7210513
+
 
 
 
@@ -52,7 +55,7 @@ https://www.geeksforgeeks.org/how-to-design-a-simple-calendar-using-javascript/
 primary user -> make schedule
 primary user -> send schedule
 secondary user -> recieve schedule options
-secondary user -> select option
+secondary user -> rank options & send to primary user
 
 ## BUGS
 - user can click days of previous month, but registers as current month (dont add click to class "invalid" days )
@@ -73,7 +76,7 @@ secondary user -> select option
 
 **- ADD functionality?
   - add time to dates as well
-  - could we send to multiple people and aggrigate results? useful?s
+  x could we send to multiple people and aggrigate results? useful?s
   - add schedule event types (date, appointment, meal, etc.)
 
 primary
@@ -83,8 +86,10 @@ primary
   - after create schedule "submit" give url back to user. popup?
   x main page -> set cookie = user ID (change database)
   -should we prevent primary user from voting?
-  - change primary user routes. aggrigate page branch -> create or results
-  - create aggrigate page
+  X change primary user routes. aggrigate page branch -> create or results (then do secondary??)
+  x create aggrigate page
+  - add percentages to results? (just for user, not in data)
+  - add who has voted to results page
 secondary
   - error handling for invalid schedule url
   x user will click date, w cause popup (? maybe)
@@ -97,7 +102,8 @@ secondary
   x pass id back to primary to log date??
   - check if user primary (primary cannot vote) => dif page?
   x get name from secondary
-  - currently hard coded name, cookie and rank being sent to server/database, need to get info from user
+  x currently hard coded name, cookie and rank being sent to server/database, need to get info from user
+
 
 
 
@@ -109,3 +115,7 @@ secondary
   - show in calendar? but times might make difficult? zoom into day?
   - no login. app functions via cookies
   - can only vote once per cookie
+
+FEATURES
+  (add notes to top description?)
+  -- ranks are weighted by amount of dates in schedule
