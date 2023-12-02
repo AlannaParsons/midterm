@@ -60,7 +60,7 @@ secondary user -> rank options & send to primary user
 ## BUGS
 - user can click days of previous month, but registers as current month (dont add click to class "invalid" days )
 -creating schedule is not wiping old data, upon submit must clear
-
+- SECONDARY - dates shown out of order?
 ## CURRENT
 
 - file organization.

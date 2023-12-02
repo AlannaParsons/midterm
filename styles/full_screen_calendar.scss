@@ -107,7 +107,11 @@
     background: #6332c5;
   }
 
-  .calendar-dates li:not(.active):hover::before {
+  .calendar-dates li.select::before {
+    background: green;
+  }
+
+  .calendar-dates li:not(.active):not(.select):hover::before {
     background: #e4e1e1;
   }
 

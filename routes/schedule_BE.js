@@ -17,13 +17,13 @@ router.get('/', async function (req, res) {
 //get reults from db to set up results page
   const cookie = req.cookies.cookieName;
   // hard code id for testing
-  const testCookie = 6740489741359201;
+
 
   let urls_dates = new Array();
   //rename...to what
 
   //get schedules created by user
-  const schedules = await userQueries.getScheduleByUser(testCookie);
+  const schedules = await userQueries.getScheduleByUser(cookie);
 
   //get all dates of all schedules, make object to hold data
   for (let schedule of schedules) {

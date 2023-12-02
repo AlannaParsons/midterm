@@ -1,80 +1,40 @@
-// Client facing scripts here
-
+// primary user. (may move into schedule_FE)
+// - given calendar - select and deselect dates to move into available event dates
+// - FIX - inactive dates are clickable.
+//        - ui for select and deselect
+//        - ui for on submit
 
 $(() => {
   let dates = [];
-  const $scheduleSubmit = $('#submit-schedule-button');
 
-  // feedback when calendar date clicked. save for feedback & send
-  function getEventTarget(e) {
-    e = e || window.event;
-    return e.target || e.srcElement;
-  }
     //if <li class="inactive"> non clickable?????
   // get date of clicked, send to temp memory + add feedback to selected
-  // FIX?! do jquery?
-  let calDates = document.getElementsByClassName("calendar-dates")[0];
-  calDates.onclick = function(event) {
-    let target = getEventTarget(event);
-    //combine?
-    let monthyear = document.getElementsByClassName("calendar-current-date")[0];
-    let [month, year] = monthyear.innerHTML.split(' ');
 
-    //  // convert "date string" into "date object"
-    // does string layout matter?? turning into date
-        let stringdate = `${month} ${target.innerHTML}, ${year}`;
-
-        var date = new Date(stringdate);
-
-    dates.push(date.toUTCString())
-    //strong components -> date -> utc
-    console.log('date:', date.toUTCString())
-    //alert()
-
-    //PUSH UTC TO LIST
-        //Date.UTC(year, monthIndex, day, hour, minute, second, millisecond)
-
-      // var isoDateString = new Date().toISOString();
-      // console.log(isoDateString);
-      // d.toUTCString();
-
-
-    target.setAttribute("style", "color: green;");
-  };
-
-//then give user unique url to send
-  $scheduleSubmit.on('click', (event) => {
+  $('.date').on('click', function(event) {
     event.preventDefault();
 
-    //dates is currently an array of date obj
+    //get date info from html
+    let [month, year] = $(".calendar-current-date").html().split(' ');
+    let date_clicked = $(this).html()
+    // convert to utc and add to dates array
+    let stringdate = `${month} ${date_clicked}, ${year}`;
+    let date = new Date(stringdate);
+    dates.push(date.toUTCString())
 
-    // create file for ajax??
+    // do a toggle or something, this onlye works once
+    //$(this).css('color','green');
+    $(this).toggleClass("select");
+  })
+
+  $('#submit-schedule-button').on('click', (event) => {
+    event.preventDefault();
+
+    // create file for ajax?? add success & error handler
     $.ajax({
         method: "POST",
         url: "/primary/create",
         data: {dates: dates}
       })
-      //untested
-      //.then ($('#schedule-submit-form')).trigger("reset");
-
 
   })
-
-
-
-
-
-
-  /*******EXAMPLE OF HIDDEN FORM. USE LATER?
-  const $newTweetAccess = document.querySelector('#new-tweet-button');
-
-  $newTweetAccess.addEventListener('click', function (event) {
-    event.preventDefault();
-    const $tweetForm = document.querySelector('#tweet-form');
-
-    $tweetForm.style.display = $tweetForm.style.display === 'flex' ? 'none' : 'flex';
-
-  })
-  //*******EXAMPLE OF HIDDEN FORM. USE LATER? */
-
 })

@@ -1,3 +1,6 @@
+// Calendar provided by :
+//https://www.geeksforgeeks.org/how-to-design-a-simple-calendar-using-javascript/
+
 $(() => {
 
   let date = new Date();
@@ -60,7 +63,7 @@ $(() => {
               && month === new Date().getMonth()
               && year === new Date().getFullYear()
               ? "active"
-              : "";
+              : "date";
           lit += `<li class="${isToday}">${i}</li>`;
       }
 
@@ -76,16 +79,6 @@ $(() => {
       // update the HTML of the dates element
       // with the generated calendar
       day.innerHTML = lit;
-
-
-
-
-
-        // // When an icon is clicked
-        // day.addEventListener("click", () => {
-        //   console.log('DATE:',day,'clicked')
-        // })
-
 
   }
 
@@ -137,7 +130,8 @@ $(() => {
 
 
 
-  // Attach a click event listener to each icon
+  // Attach a click event listener to each icon/
+
   prenexIcons.forEach(icon => {
 
       // When an icon is clicked
