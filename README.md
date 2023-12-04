@@ -109,7 +109,7 @@ secondary
   - check if user primary (primary cannot vote) => dif page?
   x get name from secondary
   x currently hard coded name, cookie and rank being sent to server/database, need to get info from user
-  - add ranking color to picked dates
+  - add ranking color to picked dates - REORDER DATES
 
 
 

@@ -41,7 +41,7 @@
   <main>
 
 
-    <section id="side-bar">
+    <!-- <section id="side-bar">
       <div class="date" id="display-date"> DATE </div>
       <div class="date"> CALENDAR </div>
 
@@ -74,22 +74,26 @@
         </div>
       </div>
 
-    </section>
+    </section> -->
 
 
 
     <section id="middle-bar">
 
-      <div class="dates-container">
-        <div></div>
+      <ol id="ranked-choices">
+
+      </ol>
+
+      <ol id="dates-container">
+
 
         <% for (let date of dates) { %>
 
 
-          <button data-id="<%= date.id %>" class="date-container" name="container">
+          <li data-id="<%= date.id %>" class="date-container" name="container">
 <!-- need utc conversion gl -->
             <%= date.utc %>
-          </button>
+          </li>
         <% } %>
           <!-- <header>
             <span id="icon-name">
@@ -110,12 +114,11 @@
             </span>
           </footer> -->
 
-      </div>
+        </ol>
       <div class="popup">
-        the popup!
-        Schedule _ for <span id="popup-date"></span>
+        <!-- Schedule _ for <span id="popup-date"></span> -->
         <button class="accept" type="submit" form="name-form"> accept </button>
-        <button class="decline"> decline </button>
+        <!-- <button class="decline"> decline </button> -->
       </div>
 
     </section>
