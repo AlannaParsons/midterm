@@ -26,15 +26,27 @@ $(() => {
     $(this).toggleClass("select");
   })
 
-  $('#submit-schedule-button').on('click', (event) => {
+  $('#submit-schedule-button').on('click', function(event) {
     event.preventDefault();
 
-    // create file for ajax?? add success & error handler
-    $.ajax({
+    //required field or prompt once? dont NEED event type
+    let eventtype = $("#event-type").val().trim()
+    if (eventtype.length <= 0) {
+      alert("please enter event type")
+    } else {
+    //values are ranked by postion in
+      $.ajax({
         method: "POST",
         url: "/primary/create",
-        data: {dates: dates}
+        data: {dates: dates, eventType: eventtype},
+        success: function(data) {
+          console.log('inside post success', data)
+        },
+        error : function(XMLHttpRequest, textStatus, errorThrown) {
+          console.log('my error is : ' + errorThrown);
+        }
       })
+    }
 
   })
 })

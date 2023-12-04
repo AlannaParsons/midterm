@@ -27,11 +27,19 @@ router.get('/', async function (req, res) {
 
   //get all dates of all schedules, make object to hold data
   for (let schedule of schedules) {
-    let data = await userQueries.getDates(schedule.id);
+    let UTCdates = await userQueries.getDates(schedule.id);
+
+    //pull info out of utc for showing
+    //var result = UTCdates.map(date => ({ month: date.utc.getUTCMonth}));
+    let min = UTCdates[0];
+    let max = UTCdates[UTCdates.length - 1];
+    console.log('schedule be get:',min, max)
+
     const scheduleOBJ = {
       id: schedule.id,
       url: schedule.url,
-      dates: data
+      type: schedule.type,
+      dates: UTCdates
     }
     urls_dates.push(scheduleOBJ);
 
@@ -74,7 +82,7 @@ router.post("/create", async function(req, res) {
     console.log('cookie in create post be', id)
 
     //new user added create new schedule then add dates w schedule id
-    let schedule_id = await userQueries.addSchedule(id, randomURL);
+    let schedule_id = await userQueries.addSchedule(id, randomURL, req.body.eventType);
     for (let dateStr of req.body.dates) {
       //date string should be utc here
       var date = new Date(dateStr);

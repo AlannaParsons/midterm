@@ -56,17 +56,16 @@ $(() => {
         data: {vals: ranked_dates, name: username},
         success: function(data) {
           console.log('inside post success', data)
-          //send to thank you page OR results page. secondary doesnt need results?
-          // put back after testing
-          //window.location.replace('/base');
+        },
+        error : function(XMLHttpRequest, textStatus, errorThrown) {
+          console.log('my error is : ' + errorThrown);
         }
       })
     }
   })
 
   $('.decline').on('click', function(event) {
-    event.preventDefault(); //necessary here?
-    //$('.popup').toggle("show");
+    event.preventDefault();
     $('.popup').css('display','none');
   })
 

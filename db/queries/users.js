@@ -64,12 +64,12 @@ const db = require('../connection');
  * @return {Promise<{}>} A promise to the user.
  *
  */
- const addSchedule = function (user, url) {
+ const addSchedule = function (user, url, type) {
 
   return db
-  .query(`INSERT INTO schedules (user_cookie, url)
+  .query(`INSERT INTO schedules (user_cookie, url, type)
           VALUES ($1, $2)
-          RETURNING id;`, [user, url])
+          RETURNING id;`, [user, url, type])
   .then((result) => {
     console.log('schedule add?:',result.rows[0].id);
     return result.rows[0].id;

@@ -18,7 +18,8 @@ DROP TABLE IF EXISTS votes CASCADE;
 CREATE TABLE schedules (
   id SERIAL PRIMARY KEY NOT NULL,
   user_cookie VARCHAR(255) NOT NULL,
-  url VARCHAR(255) NOT NULL
+  url VARCHAR(255) NOT NULL,
+  type VARCHAR(255)
 
   -- max schedule length?
 
@@ -31,7 +32,7 @@ CREATE TABLE dates (
 
 );
 
--- what should vote be?. ranked? 0:date_id, 1:date_id. (use keys for weight -> reverse?)
+-- ranks are weighted by amount of dates in schedule
 CREATE TABLE votes (
   id SERIAL PRIMARY KEY NOT NULL,
   date_id INTEGER REFERENCES dates(id),

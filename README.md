@@ -90,8 +90,11 @@ primary
   x create aggrigate page
   x add percentages to results? (just for user, not in data)
   - currently using percentage to render color, add more data for user??? chart?
-  - add who has voted to results page
-  - add buttons to navigate create & results
+  x add who has voted to results page
+  - add buttons to navigate create & results (MAKE NAV BAR)
+  - get rid of date range in creating schedule
+  - add type of event (drop dow or text input)
+
 
 secondary
   - error handling for invalid schedule url
@@ -106,6 +109,7 @@ secondary
   - check if user primary (primary cannot vote) => dif page?
   x get name from secondary
   x currently hard coded name, cookie and rank being sent to server/database, need to get info from user
+  - add ranking color to picked dates
 
 
 
@@ -114,11 +118,17 @@ secondary
   x typing. control data as it moves around. make plan for when date should be OBJ (in database) and when it should be DATE type (all server and front end use) TIME STAMP. make helpers
   full change to utc
   - if sending to multiple people, how do we knpw when pole is over?
-    must hold results, add to database
+    must hold results, add to database. expiry?? expiry set by last possible date of schedule or first
   - show in calendar? but times might make difficult? zoom into day?
   - no login. app functions via cookies
   - can only vote once per cookie
-
+  - could use internal calendar of phones?
 FEATURES
   (add notes to top description?)
   -- ranks are weighted by amount of dates in schedule
+  -happy path complete, add all error handling
+
+## Considerations for future dev
+  - create schedule event type input could change to drop down for ease
+  - add expiry date (cannot vote past dates given?)
+

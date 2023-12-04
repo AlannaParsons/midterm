@@ -24,16 +24,9 @@
 
 <body>
   <!-- Top nav bar (fixed) -->
-  <nav>
-    <span class="logo">ScheduleMe</span>
 
-    <button id="new-tweet-button">
-      <div>
-      <span class="bold">all events page</span>
-      </div>
-    </button>
+  <%- include('partials/nav') %>
 
-  </nav>
 
   <!-- Page-specific (main) content here -->
   <main>
@@ -55,7 +48,7 @@
 
             <% for (let dates of schedule.dates) { %>
 
-                <div><%= dates.utc %></div>
+                <div><%= dates.utc%></div>
 
             <% } %>
 

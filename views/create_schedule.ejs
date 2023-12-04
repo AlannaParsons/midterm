@@ -40,15 +40,8 @@
 <!-- rename pls -->
     <section id="middle-bar">
 
-<!-- type="date" is not supported in Internet Explorer 11. -->
-      <form id="date-range-form">
-        <p>Date :</p>
-        <input type="date" id="datemax" name="datemax" max="1979-12-31"><br><br>
-        <p> - </p>
-        <input type="date" id="datemin" name="datemin" min="2000-01-02">
-      </form>
-
-
+      <label>Event type :</label>
+      <input id="event-type" type="text" name="event" placeholder="event type" required />
 
       <div class="date" id="display-date"> DATE </div>
       <div class="date"> CALENDAR </div>

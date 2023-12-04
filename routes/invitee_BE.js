@@ -13,34 +13,28 @@ const router  = express.Router();
 const userQueries = require("../db/queries/users");
 
 router.get('/:uniq_url', async function (req, res) {
-  ///eventually give render ID?
 
-  //console.log('schedule id returned', req.params.uniq_url);
-
-  //account for invalid url/ schedule id here
   const schdule_id = await userQueries.getSchedule(req.params.uniq_url);
-  //console.log('getting shcedule at server accept dates',await schdule_id);
 
-  // array of date objs
-  const dates = await userQueries.getDates(schdule_id.id);
-  // turn dates into date types??
-  for (let dateStr of dates) {
-    console.log("date:", dateStr)
-    //var date = new Date(dateStr);
+  if (!schdule_id) {
+    res.status(404).send();
+  } else {
+    const dates = await userQueries.getDates(schdule_id.id);
+
+    //array of obj
+    // [
+    //   { id: 1, schedule_id: 1, utc: 'Mon, 06 Nov 2023 07:00:00 GMT' },
+    //   { id: 2, schedule_id: 1, utc: 'Tue, 07 Nov 2023 07:00:00 GMT' },
+    //   { id: 3, schedule_id: 1, utc: 'Wed, 08 Nov 2023 07:00:00 GMT' }
+    // ]
+    const templateVars = {
+      dates: dates
+    };
+
+    res.render('invitee', templateVars)
+
   }
-  //array of obj
-  // [
-  //   { id: 1, schedule_id: 1, utc: 'Mon, 06 Nov 2023 07:00:00 GMT' },
-  //   { id: 2, schedule_id: 1, utc: 'Tue, 07 Nov 2023 07:00:00 GMT' },
-  //   { id: 3, schedule_id: 1, utc: 'Wed, 08 Nov 2023 07:00:00 GMT' }
-  // ]
-  const templateVars = {
-    dates: dates
-    //user: users[req.session.user_id]
-  };
 
-
-  res.render('invitee', templateVars)
 
 });
 
