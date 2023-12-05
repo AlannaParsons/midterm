@@ -18,43 +18,48 @@ $(() => {
     let date_html = $(this).html();
     //console.log('findingu:', date_id, date_html);
 
-
+    //still want this??
     $(this).toggleClass('selected');
 
     //check if selected of deselected. add or remove from data
     let theClass = $(this).attr('class');
 
+
     if (theClass.includes('selected')) {
-      console.log('move selected to selected list')
-      ranked_dates.push(date_id);
-      $('#ranked-choices').append($(this).clone(true));
-      $(this).toggle()
+      ranked_dates.push(date_id); //add id to list to be returned
+
+      //clone clicked elem, add to seperate list, ajust css
+      let clone = $(this).clone(true);
+      $('#ranked-choices').append(clone);
+      clone.find('.triangle-left').hide();
+      clone.find('.triangle-right').show();
+
+      $(this).toggle()  //remove from original list
+
     } else {
+
+      //remove from list to be returned
       let ind = ranked_dates.indexOf(date_id);
       ranked_dates.splice(ind, 1);
-      console.log('move selected to non',$('#dates-container'))
+
+      //find original from copied elem, toggle back on original
       $('#dates-container').children().each(function () {
         if ($(this).data("id") === date_id) {
-          console.log('found original date to')
           $(this).toggle()
           $(this).toggleClass('selected');
-
         }
       })
-      console.log(date_id)
 
-      //$('#ranked-choices').remove($(this));
-      $(this).remove()
-      //then toggle orginal version on. fin dwith id?
-
+      $(this).remove()  //remove from ranked list
     }
 
-    //reload ranked choice list after click
-
-
-    //$('.popup').toggle("show"); toggle is smooth but less functional??
-    $('.popup').css('display','flex');
-
+    // change name? TURNERY
+    //send info button only available when user has given answer
+    if (ranked_dates.length === 0) {
+      $('.popup').css('display','none');
+    } else {
+      $('.popup').css('display','flex');
+    }
 
     //REVISIT????
     // stringify date just in case?

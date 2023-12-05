@@ -26,109 +26,42 @@
   <nav>
     <span class="logo">ScheduleMe</span>
 
-
-      <p>Required Attribute</p>
-
-    <!-- <form id="name-form" action="/secondary" method="POST"> -->
+    <span class="nav-input">
       <label>Name:</label>
       <input id="voter-name" type="text" name="user" placeholder="name" required />
-    <!-- </form> -->
-
+    </span>
 
   </nav>
 
   <!-- Page-specific (main) content here -->
   <main>
 
-
-    <!-- <section id="side-bar">
-      <div class="date" id="display-date"> DATE </div>
-      <div class="date"> CALENDAR </div>
-
-      <div class="calendar-container">
-        <header class="calendar-header">
-          <p class="calendar-current-date"></p>
-          <div class="calendar-navigation">
-            <span id="calendar-prev"
-              class="material-symbols-rounded">
-              chevron_left
-            </span>
-            <span id="calendar-next"
-              class="material-symbols-rounded">
-              chevron_right
-            </span>
-          </div>
-        </header>
-
-        <div class="calendar-body">
-          <ul class="calendar-weekdays">
-            <li>S</li>
-            <li>M</li>
-            <li>T</li>
-            <li>W</li>
-            <li>T</li>
-            <li>F</li>
-            <li>S</li>
-          </ul>
-          <ul class="calendar-dates"></ul>
-        </div>
-      </div>
-
-    </section> -->
-
-
-
     <section id="middle-bar">
 
       <ol id="ranked-choices">
-
       </ol>
 
       <ol id="dates-container">
-
-
         <% for (let date of dates) { %>
-
-
-          <li data-id="<%= date.id %>" class="date-container" name="container">
-<!-- need utc conversion gl -->
-            <%= date.utc %>
-          </li>
+            <li data-id="<%= date.id %>" class="date-container" name="container">
+              <span class="triangle triangle-right"></span>
+              <span class="date-html"> <%= date.utc %> </span>
+              <span class="triangle triangle-left"></span>
+            </li>
         <% } %>
-          <!-- <header>
-            <span id="icon-name">
-              <img src = "${tweet.user.avatars}" alt = "<i class="fa-solid fa-user"></i>
-              ${tweet.user.name}
-            </span>
-            <span id="account"> ${tweet.user.handle} </span>
-          </header>
-          <div class="content">
-            ${tweet.content.text}
-          </div>
-          <footer>
-            <span>${timeago.format(tweet.created_at, 'en_US')}</span>
-            <span id="icons">
-              <i class="fa-solid fa-heart"></i>
-              <i class="fa-solid fa-flag"></i>
-              <i class="fa-solid fa-repeat"></i>
-            </span>
-          </footer> -->
-
-        </ol>
-      <div class="popup">
-        <!-- Schedule _ for <span id="popup-date"></span> -->
-        <button class="accept" type="submit" form="name-form"> accept </button>
-        <!-- <button class="decline"> decline </button> -->
-      </div>
+      </ol>
 
     </section>
 
+    <div class="popup">
+      <button class="accept" type="submit" form="name-form"> accept </button>
+    </div>
 
   </main>
 
   <footer id="primary-footer">
-    <button id="footer-button"> <i class="fa-solid fa-circle-chevron-up"></i> </button>
   </footer>
+
 </body>
 
 </html>
