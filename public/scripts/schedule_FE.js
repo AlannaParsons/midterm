@@ -10,18 +10,19 @@ $(() => {
   $('.create').on('click', function(event) {
     event.preventDefault(); //necessary here?
 
-
-    $.ajax({
-      method: "POST",
-      url: "/secondary",
-      data: {accepted_date: date_id},
-      success: function(data) {
-        console.log('inside post success', data)
-        //reconsider functionality AND url naming
-        window.location.replace('/base');
-      }
-      //redirect upon post??? good practice?
-    })
+    const date_url = $(this).data("url")
+    window.location.href = 'primary/create';
+    // $.ajax({
+    //   method: "POST",
+    //   url: "/secondary",
+    //   data: {accepted_date: date_id},
+    //   success: function(data) {
+    //     console.log('inside post success', data)
+    //     //reconsider functionality AND url naming
+    //     window.location.replace('/base');
+    //   }
+    //   //redirect upon post??? good practice?
+    // })
   })
 
   $('#go-to-results-button').on('click', function(event) {

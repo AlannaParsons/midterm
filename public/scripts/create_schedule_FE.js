@@ -19,11 +19,14 @@ $(() => {
     // convert to utc and add to dates array
     let stringdate = `${month} ${date_clicked}, ${year}`;
     let date = new Date(stringdate);
+
+    //utc or iso...
     dates.push(date.toUTCString())
 
     // do a toggle or something, this onlye works once
     //$(this).css('color','green');
     $(this).toggleClass("select");
+    alert(stringdate);
   })
 
   $('#submit-schedule-button').on('click', function(event) {

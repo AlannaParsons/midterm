@@ -36,10 +36,12 @@
   <!-- Page-specific (main) content here -->
   <main>
 
-    <section id="middle-bar">
-
+    <section id="side-bar">
       <ol id="ranked-choices">
       </ol>
+    </section>
+
+    <section id="middle-bar">
 
       <ol id="dates-container">
         <% for (let date of dates) { %>
@@ -53,13 +55,14 @@
 
     </section>
 
-    <div class="popup">
-      <button class="accept" type="submit" form="name-form"> accept </button>
-    </div>
+
 
   </main>
 
   <footer id="primary-footer">
+    <div class="popup">
+      <button class="accept" type="submit" form="name-form"> accept </button>
+    </div>
   </footer>
 
 </body>

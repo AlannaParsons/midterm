@@ -21,6 +21,41 @@ router.get('/:uniq_url', async function (req, res) {
   } else {
     const dates = await userQueries.getDates(schdule_id.id);
 
+
+    //assuming we always use this func afters dates come out of db
+    function dateStructuring(dates) {
+
+
+      const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour:'numeric',
+        minute:'numeric'
+      };
+
+
+
+
+
+      for (let date of dates) {
+        // console.log ('funct testing in invitee be',date.utc.getUTCMonth());
+
+        // const monthNamesShort = ['JA', 'FE', 'MR', 'AP', 'MY', 'JN',
+        //                           'JL', 'AU', 'SE', 'OC', 'NV', 'DE' ];
+
+        // console.log(monthNamesShort[date.utc.getUTCMonth()]);
+        //let createdByUtc = JSON.parse( `{"utc": ${date.utc}, "local": "2022-08-20T12:18:48.6588096"}`);
+        let newDate =new Date(date.utc)
+
+        options.timeZone = 'UTC';
+        options.timeZoneName = 'short';
+        console.log(newDate.toLocaleString('en-US', options))
+
+      }
+    }
+    dateStructuring(dates)
     //array of obj
     // [
     //   { id: 1, schedule_id: 1, utc: 'Mon, 06 Nov 2023 07:00:00 GMT' },
@@ -56,8 +91,8 @@ router.post("/:uniq_url", async function(req, res) {
   //make sure unselected dates are accounted for in weighting of ranks
   //ranks relative to all dates available
   //rank lowest is one because dates.length-i. rank 0 unnecessary
-  for (let i in req.body.vals) {
-    userQueries.addVotes(req.body.vals[i], req.body.name, cookie, dates.length-i);
+  for (let i in req.body.dates) {
+    userQueries.addVotes(req.body.dates[i], req.body.name, cookie, dates.length-i);
   }
   //not necessary to add dates that werent voted on?? add rank:0??
   // for (let i in dates) {

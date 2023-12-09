@@ -28,7 +28,8 @@ CREATE TABLE schedules (
 CREATE TABLE dates (
   id SERIAL PRIMARY KEY NOT NULL,
   schedule_id INTEGER REFERENCES schedules(id),
-  utc VARCHAR(255) NOT NULL
+  -- utc VARCHAR(255) NOT NULL
+  utc TIMESTAMP
 
 );
 

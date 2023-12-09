@@ -1,57 +1,22 @@
 // // Client facing scripts here
+// rename -> nav?
+//NEEDS TESTING
 
 
 $(() => {
   let tempHold = null;
 
+    // When the user scrolls down 30px from the top of the document, show the button
+    window.onscroll = function() {scrollFunction()};
 
-  // $submit-button.on('click', (event) => {
-  //   event.preventDefault();
-  //   // const data = $('#schedule-submit-form').serialize();
-  //   //hold is currently a messy string month year day, etc...
-  //   let hold = $("#selected-date").val();
-  //   console.log('hold data', hold)
+    function scrollFunction() {
+      if (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40) {
+        $('nav').slideUp('slow');
+      } else {
+        $('nav').slideDown('slow');
+      }
+    }
 
-  //   //helper function to reformat code, if wanted .serializeArray ?
-  //   // formData?
-  //   // create file for ajax??
-  //   $.ajax({
-  //       method: "POST",
-  //       url: "/primary",
-  //       data: {dates: hold}
-  //     })
-      //untested
-      //.then ($('#schedule-submit-form')).trigger("reset");
-
-
-
-
-
-
-    // hold.forEach((elem) => console.log('has date:', elem.day, elem.month, elem.year))
-
-
-
-
-
-    // const safeData = `${escape($tweetForm.serialize())}`;
-    // let scheduleInput = $("#tweet-text").val();
-
-    // if (validation(inputtxt).length <= 0){
-    //   //make post tweet modular??
-    //   postTweet(safeData);
-
-
-    // } else {
-    //   console.log ('error occurred in validation')
-
-    // }
-    // $tweetForm.trigger("reset");
 
   })
 
-
-
-
-
-// })

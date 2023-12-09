@@ -27,55 +27,16 @@
 
   <%- include('partials/nav') %>
 
-  <nav>
-    <span class="logo">ScheduleMe</span>
-
-    <button id="new-tweet-button">
-      <div>
-      <span class="bold">Results</span>
-      </div>
-    </button>
-
-  </nav>
-
   <!-- Page-specific (main) content here -->
   <main>
 
 
     <section id="side-bar">
-      <div class="date" id="display-date"> DATE </div>
+
+      <h5>Contributors:</h5>
       <% for (let voter of voters) { %>
         <div class="date"> <%= voter.voter_name %> </div>
       <% } %>
-
-      <div class="calendar-container">
-        <header class="calendar-header">
-          <p class="calendar-current-date"></p>
-          <div class="calendar-navigation">
-            <span id="calendar-prev"
-              class="material-symbols-rounded">
-              chevron_left
-            </span>
-            <span id="calendar-next"
-              class="material-symbols-rounded">
-              chevron_right
-            </span>
-          </div>
-        </header>
-
-        <div class="calendar-body">
-          <ul class="calendar-weekdays">
-            <li>S</li>
-            <li>M</li>
-            <li>T</li>
-            <li>W</li>
-            <li>T</li>
-            <li>F</li>
-            <li>S</li>
-          </ul>
-          <ul class="calendar-dates"></ul>
-        </div>
-      </div>
 
     </section>
 
@@ -84,51 +45,27 @@
     <section id="middle-bar">
 
       <div class="dates-container">
-        <div></div>
 
         <% for (let result of results) { %>
-
-          <button class="date-container" name="container" style="background-color:<%= result.style %>;" >
-
+          <span class="date-container" name="container" style="background-color:<%= result.style %>; width: <%= result.length %>;" >
             <%= result.sum %> <%= result.utc %> <%= result.dateid%>
 
-          </button>
+            <span class="triangle triangle-left"></span>
+            <span class="result-bar-shrink" style="width: <%= `${100 - result.percentage}%` %>;" >
+              <%= `${result.percentage}%` %>
+            </span>
+          </span>
+
         <% } %>
-          <!-- <header>
-            <span id="icon-name">
-              <img src = "${tweet.user.avatars}" alt = "<i class="fa-solid fa-user"></i>
-              ${tweet.user.name}
-            </span>
-            <span id="account"> ${tweet.user.handle} </span>
-          </header>
-          <div class="content">
-            ${tweet.content.text}
-          </div>
-          <footer>
-            <span>${timeago.format(tweet.created_at, 'en_US')}</span>
-            <span id="icons">
-              <i class="fa-solid fa-heart"></i>
-              <i class="fa-solid fa-flag"></i>
-              <i class="fa-solid fa-repeat"></i>
-            </span>
-          </footer> -->
 
       </div>
-      <div class="popup">
-        the popup!
-        Schedule _ for <span id="popup-date"></span>
-        <button class="accept"> accept </button>
-        <button class="decline"> decline </button>
-      </div>
-
     </section>
-
 
   </main>
 
-  <footer id="primary-footer">
+  <!-- <footer id="primary-footer">
     <button id="footer-button"> <i class="fa-solid fa-circle-chevron-up"></i> </button>
-  </footer>
+  </footer> -->
 </body>
 
 </html>

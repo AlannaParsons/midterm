@@ -39,24 +39,31 @@
       <div class="schedules-container">
         <div></div>
 
+        <table>
+          <thead>
+            <tr>
+              <th> URL </th>
+              <th> Range </th>
+              <th> Current Participants </th>
+              <th> Event </th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (let schedule of schedules) { %>
+              <tr data-id="<%= schedule.id %>" name="container">
 
-        <% for (let schedule of schedules) { %>
-          <div data-id="<%= schedule.id %>" class="date-container" name="container">
+                <td><%= schedule.url %></td>
+                <td><%= schedule.range[0] %> - <%= schedule.range[1] %>  </td>
+                <td><%= schedule.count %></td>
+                <td><%= schedule.type %></td>
 
-            <%= schedule.id %>
-            <%= schedule.url %>
-
-            <% for (let dates of schedule.dates) { %>
-
-                <div><%= dates.utc%></div>
-
+                <td><button id="go-to-results-button" data-url="<%= schedule.url %>">
+                  results
+                </button></td>
+              </tr>
             <% } %>
-
-            <button id="go-to-results-button" data-url="<%= schedule.url %>">
-              results
-            </button>
-          </div>
-        <% } %>
+          </tbody>
+        </table>
           <!-- <header>
             <span id="icon-name">
               <img src = "${tweet.user.avatars}" alt = "<i class="fa-solid fa-user"></i>

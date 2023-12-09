@@ -20,6 +20,7 @@ body {
 
 #middle-bar {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   flex-grow: 1;
 
@@ -109,6 +110,11 @@ button {
   display:flex;
   justify-self: flex-end;
 
+}
+
+.result-bar-shrink {
+  display: block;
+  background-color: #555;
 }
 
 

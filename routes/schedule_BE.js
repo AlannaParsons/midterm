@@ -31,15 +31,23 @@ router.get('/', async function (req, res) {
 
     //pull info out of utc for showing
     //var result = UTCdates.map(date => ({ month: date.utc.getUTCMonth}));
-    let min = UTCdates[0];
-    let max = UTCdates[UTCdates.length - 1];
-    console.log('schedule be get:',min, max)
+    //based on order from db (CHECK)
+    let min = UTCdates[0].utc;
+    let max = UTCdates[UTCdates.length - 1].utc;
+    let range = [min, max];
+    // console.log('schedule be get:',min, max)
+
+    //let currentVotes = await userQueries.getVoterCount(schedule.id);
+    //let currentVoters = await userQueries.getVoters(schedule.id);
+    //console.log('schedule bhow many voted:',currentVoters)
 
     const scheduleOBJ = {
       id: schedule.id,
       url: schedule.url,
       type: schedule.type,
-      dates: UTCdates
+      dates: UTCdates,
+      count: schedule.voter_count,
+      range: range
     }
     urls_dates.push(scheduleOBJ);
 
@@ -115,12 +123,20 @@ router.get('/:uniq_url', async function (req, res) {
   // turn dates into date types??
   const voters= await userQueries.getVoters(schdule_id.id);
 
-
+  //assumes largest result is first
+  let max = votes[0].results
+  // set min to fit text. percentage
+  //let min =
   for (let vote of votes){
     //add color to vote?  pickHex(color1, color2, weight)
-
-    vote['style'] = helpers.perc2color(vote.percentage)
-    console.log('BE. prim. get uniq id',votes.length, helpers.perc2color(vote.percentage))
+    //fix color weighting base off max not percentage
+    vote['style'] = helpers.percentageToColor(vote.results/max * 100);
+    //vote['style'] = helpers.getColor(vote.results/max * 100);
+    //vote['style'] = helpers.pick(vote.results/max * 100);
+    //vote['style'] = helpers.perc2color(vote.results/max * 100)
+    //let lengthstr = `${}rem`
+    //vote['length'] = lengthstr;
+    console.log('BE. prim. get uniq id',vote)
 
   }
 //get percentages for ranks
@@ -140,6 +156,8 @@ router.get('/:uniq_url', async function (req, res) {
   //   { id: 2, schedule_id: 1, utc: 'Tue, 07 Nov 2023 07:00:00 GMT' },
   //   { id: 3, schedule_id: 1, utc: 'Wed, 08 Nov 2023 07:00:00 GMT' }
   // ]
+
+  //styles attatched to results inside votes to be used by ejs
   const templateVars = {
     dates: dates,
     results: votes,

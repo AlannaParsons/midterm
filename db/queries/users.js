@@ -1,5 +1,6 @@
 const db = require('../connection');
 
+//SELECT GETUTCDATE();
 
 // const getUsers = () => {
 //   return db.query('SELECT * FROM users;')
@@ -68,7 +69,7 @@ const db = require('../connection');
 
   return db
   .query(`INSERT INTO schedules (user_cookie, url, type)
-          VALUES ($1, $2)
+          VALUES ($1, $2, $3)
           RETURNING id;`, [user, url, type])
   .then((result) => {
     console.log('schedule add?:',result.rows[0].id);
@@ -135,7 +136,7 @@ const db = require('../connection');
 
 /**
  * USED BY SERVER -> not userqueries? seperate?
- *
+ * CHANGE TO BY ID... WHEN I FIND WHERE ITS USED
  * get schdule id from database using url. load into html when given url?
  * @param {string} url
  * @return {Promise<{}>} A promise with schedule id given url
@@ -168,8 +169,11 @@ const db = require('../connection');
  const getScheduleByUser = function (userCookie) {
 
   return db
-  .query(`SELECT * FROM schedules
+  .query(`SELECT schedules.id, url, type, COUNT(DISTINCT votes.voter_name) AS voter_count FROM schedules
+          LEFT JOIN dates ON schedules.id = dates.schedule_id
+          LEFT JOIN votes ON dates.id = votes.date_id
           WHERE user_cookie LIKE ($1)
+          GROUP BY schedules.id
           ;`, [userCookie])
   .then((result) => {
     console.log('schedules get?:',result.rows);
@@ -221,9 +225,10 @@ const db = require('../connection');
   return db
   .query(`SELECT * FROM dates
           WHERE schedule_id = ($1)
+          ORDER BY dates.utc
           ;`, [schedule_id])
   .then((result) => {
-    //console.log('dates get?:',result.rows);
+    console.log('dates get?:',result.rows);
     return result.rows;
   })
   .catch((err) => {
@@ -295,6 +300,30 @@ const db = require('../connection');
 
 };
 
+/**
+ * USED BY SERVER -> add to schedule get calls??? extra joins
+ *
+ * @param {string} url
+ * @return {Promise<{}>} A promise with schedule id given url
+ * add DISTINCT? not necessary
+ */
+ const getVoterCount = function (schedule_id) {
+
+  return db
+  .query(`SELECT COUNT(DISTINCT voter_name) FROM votes
+          JOIN dates ON dates.id = votes.date_id
+          WHERE dates.schedule_id = ($1)
+          ;`, [schedule_id])
+  .then((result) => {
+    console.log('get number of voters per?:',result.rows);
+    return result.rows;
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+
+};
+
 
 // /**
 //old version, doesnt pull percentage. still needd?
@@ -328,4 +357,4 @@ module.exports = {
   addUser, existingUser,
   addSchedule, getSchedule, getScheduleByUser, joinScheduleDates,
   addDates, getDates,
-  addVotes, getVotes, getVoters };
+  addVotes, getVotes, getVoters, getVoterCount };

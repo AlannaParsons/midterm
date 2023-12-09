@@ -8,7 +8,7 @@ function cookieMiddleware(req, res, next) {
   const cookie = req.cookies.cookieName;
   if (cookie === undefined) {
     // no: set a new cookie
-    const testCookie = 6740489741359201;
+    const testCookie = 1111111111111111;
     res.cookie('cookieName',testCookie, { maxAge: 900000, httpOnly: true });
 
     var randomNumber=Math.random().toString();

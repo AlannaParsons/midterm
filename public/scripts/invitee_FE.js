@@ -24,7 +24,7 @@ $(() => {
     //check if selected of deselected. add or remove from data
     let theClass = $(this).attr('class');
 
-
+//if i add color representation of ranks, it will be an array of hex
     if (theClass.includes('selected')) {
       ranked_dates.push(date_id); //add id to list to be returned
 
@@ -83,7 +83,7 @@ $(() => {
       $.ajax({
         method: "POST",
         url: `/secondary/${uniq_url}`,
-        data: {vals: ranked_dates, name: username},
+        data: {dates: ranked_dates, name: username},
         success: function(data) {
           console.log('inside post success', data)
         },

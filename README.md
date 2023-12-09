@@ -91,10 +91,11 @@ primary
   x add percentages to results? (just for user, not in data)
   - currently using percentage to render color, add more data for user??? chart?
   x add who has voted to results page
-  - add buttons to navigate create & results (MAKE NAV BAR)
-  - get rid of date range in creating schedule
+  x add buttons to navigate create & results (MAKE NAV BAR)
+  x get rid of date range in creating schedule
   - add type of event (drop dow or text input)
-
+  - results ejs - length of bar determined by % of votes given. intheory 0% will squish content but it doesnt... future implications? why does this work
+  - once html inside date bars change, should fix bar being larger than triangle bug
 
 secondary
   - error handling for invalid schedule url
@@ -111,7 +112,9 @@ secondary
   x currently hard coded name, cookie and rank being sent to server/database, need to get info from user
   - add ranking color to picked dates - REORDER DATES
 
-
+  - change color of ranked results and scaling of colors
+  - focusing on mobile dev, create full screen layouts
+    - may add calendar to full screen to fill space
 
 
 ## ADDRESS
