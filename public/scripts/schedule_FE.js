@@ -7,7 +7,7 @@ $(() => {
 
 // maybe put on nav bar?
     //send info back to primary user, add to schedule
-  $('.create').on('click', function(event) {
+  $('#new-schedule-button').on('click', function(event) {
     event.preventDefault(); //necessary here?
 
     const date_url = $(this).data("url")
@@ -25,7 +25,7 @@ $(() => {
     // })
   })
 
-  $('#go-to-results-button').on('click', function(event) {
+  $('.go-to-results-button').on('click', function(event) {
     event.preventDefault();
 
     const date_url = $(this).data("url")
