@@ -1,6 +1,8 @@
 // Calendar provided by :
 //https://www.geeksforgeeks.org/how-to-design-a-simple-calendar-using-javascript/
 
+import {loadDateClickers} from "/modules/modules.js";
+
 $(() => {
 
   let date = new Date();
@@ -79,6 +81,8 @@ $(() => {
       // update the HTML of the dates element
       // with the generated calendar
       day.innerHTML = lit;
+
+      loadDateClickers();
 
   }
 

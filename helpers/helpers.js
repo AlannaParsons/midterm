@@ -97,9 +97,19 @@ function getRGB(color1, color2, weight) {
 }
 
 
+function monthToLong (num) {
+  const monthNames = ["Jan.",	"Feb.",	"Mar.",	"Apr.",	"May",	"Jun.",	"Jul.",	"Aug.",	"Sep.",	"Oct.",	"Nov.",	"Dec."];
+  return monthNames[num];
+}
 
 
-module.exports = { generateRandomString, percentageToColor };
+
+
+module.exports = {
+  generateRandomString,
+  percentageToColor,
+  monthToLong
+};
 
 // loggedin
 // req.cookies.cookieName;

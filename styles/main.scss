@@ -1,9 +1,25 @@
+$font-stack: Helvetica, sans-serif;
+$primary-color: #333;
+$background-blue: #B8CEC9;
+$neutral-background: #F5ece5;
+$dark-bars: #555;
+$green: #8D9F5E;
+
+//HOW TO IMPORT THEMES:
+// @use 'base';
+
+// .inverse {
+//   background-color: base.$primary-color;
+//   color: white;
+// }
+
+
 body {
   display: flex;
   flex-direction: column;
   justify-content: center;
   // min-height: 100vh;
-  background-color: #F5ece5;
+  background-color: $neutral-background;
   // background-image: url("https://www.transparenttextures.com/patterns/fabric-plaid.png");
   font-family: Teko;
   // background: rgb(163, 208, 219);
@@ -21,7 +37,7 @@ body {
 #middle-bar {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
   flex-grow: 1;
 
 }
@@ -30,18 +46,19 @@ body {
   display: flex;
   margin: 0.1em;
   background-color: #B8CEC9;
+
 }
 
-.schedule-container {
-  display: flex;
-  margin: 0.5em;
-  padding: 0.5em;
-  background-color: white;
-  border-style: solid;
-  border-width: 5px;
-  border-color: purple;
-  border-radius: 15px;
-}
+// .schedule-container {
+//   display: flex;
+//   margin: 0.5em;
+//   padding: 0.5em;
+//   background-color: white;
+//   border-style: solid;
+//   border-width: 5px;
+//   border-color: purple;
+//   border-radius: 15px;
+// }
 
 .popup {
   display: none;
@@ -67,23 +84,22 @@ body {
   background-color: pink;
 }
 
-button {
-  background: #8D9F5E;
-  color: white;
-  border: none;
-  padding: 10px;
-  font: inherit;
-  font-size: 1.6rem;
-  cursor: pointer;
-  outline: inherit;
-  border-radius: 15px;
-  box-shadow: 5px 5px 5px #000;
-}
+// button {
+//   background: #8D9F5E;
+//   color: white;
+//   border: none;
+//   padding: 10px;
+//   font: inherit;
+//   font-size: 1.6rem;
+//   cursor: pointer;
+//   outline: inherit;
+//   border-radius: 15px;
+//   box-shadow: 5px 5px 5px #000;
+// }
 
 // elements will only ever be originally loaded on the right
 .triangle-left {
   display: flex;
-  justify-self: flex-end;
 	width: 0;
 	height: 0;
 	border-top: 25px solid transparent;
@@ -93,7 +109,6 @@ button {
 
 .triangle-right {
   display: none;
-  justify-self: flex-start;
 	width: 0;
 	height: 0;
 	border-top: 25px solid transparent;
@@ -104,6 +119,7 @@ button {
 .date-html {
   display:flex;
   align-items: center;
+  flex-grow: 1;
 }
 
 .nav-input {

@@ -25,10 +25,10 @@ $(() => {
     // })
   })
 
-  $('.go-to-results-button').on('click', function(event) {
-    event.preventDefault();
+  // $('.go-to-results-button').on('click', function(event) {
+  //   event.preventDefault();
 
-    const date_url = $(this).data("url")
-    window.location.href = 'primary/' + date_url;
-  })
+  //   const date_url = $(this).data("url")
+  //   window.location.href = 'primary/' + date_url;
+  // })
 })

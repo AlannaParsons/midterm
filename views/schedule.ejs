@@ -4,62 +4,46 @@
 <html lang="en">
 
 <head>
-  <title>All schedules Page</title>
+  <title>Aggrigate Schedules Page</title>
 
-  <meta charset="UTF-8" >
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+  <%- include('_partials/head') %>
 
-  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
-  <link rel="stylesheet" href="/vendor/border-box.css" />
-  <link rel="stylesheet" href="/styles/main.css" />
-  <link rel="stylesheet" href="/styles/layout.css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
-
-  <script src="/vendor/jquery-3.0.0.js"></script>
-  <script defer src="/scripts/app.js"></script>
   <script src="/scripts/schedule_FE.js"></script>
 
 </head>
 
+
 <body>
-  <!-- Top nav bar (fixed) -->
 
-  <%- include('partials/nav') %>
+  <%- include('_partials/nav') %>
 
-
-  <!-- Page-specific (main) content here -->
   <main>
-
-
-
 
     <section id="middle-bar">
 
       <div class="schedules-container">
-        <div></div>
-
-        <table>
+        <table class="table table-dark table-striped-columns table-hover">
           <thead>
             <tr>
-              <th> URL </th>
-              <th> Range </th>
-              <th> Current Participants </th>
-              <th> Event </th>
+              <th scope="col"> URL </th>
+              <th scope="col"> Range </th>
+              <th scope="col"> Current Participants </th>
+              <th scope="col"> Event </th>
+              <th scope="col"> </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="table-group-divider">
             <% for (let schedule of schedules) { %>
               <tr data-id="<%= schedule.id %>" name="container">
 
                 <td><%= schedule.url %></td>
-                <td><%= schedule.range[0] %> - <%= schedule.range[1] %>  </td>
+                <td><%= schedule.range %>  </td>
                 <td><%= schedule.count %></td>
                 <td><%= schedule.type %></td>
 
-                <td><button class="go-to-results-button" data-url="<%= schedule.url %>">
+                <td><a class="btn btn-outline-light" href="primary/<%= schedule.url %>">
                   results
-                </button></td>
+                </a></td>
               </tr>
             <% } %>
           </tbody>

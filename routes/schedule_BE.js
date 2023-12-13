@@ -35,7 +35,9 @@ router.get('/', async function (req, res) {
     let min = UTCdates[0].utc;
     let max = UTCdates[UTCdates.length - 1].utc;
     let range = [min, max];
-    // console.log('schedule be get:',min, max)
+    let dateRangeStr = `${helpers.monthToLong(min.getMonth())} ${min.getDate()} ${min.getFullYear()}` +
+    ' - ' +
+    `${helpers.monthToLong(max.getMonth())} ${max.getDate()} ${max.getFullYear()}`;
 
     //let currentVotes = await userQueries.getVoterCount(schedule.id);
     //let currentVoters = await userQueries.getVoters(schedule.id);
@@ -43,11 +45,11 @@ router.get('/', async function (req, res) {
 
     const scheduleOBJ = {
       id: schedule.id,
-      url: schedule.url,
+      url: 'secondary/' + schedule.url,
       type: schedule.type,
       dates: UTCdates,
       count: schedule.voter_count,
-      range: range
+      range: dateRangeStr
     }
     urls_dates.push(scheduleOBJ);
 
@@ -75,6 +77,8 @@ router.get('/create', (req, res) => {
 // is and array of obj { day: '16', month: 'November', year: '2023', selected: 'true' }
 router.post("/create", async function(req, res) {
   if (req.body.dates) {
+
+    console.log('POSTING IN SCHeDULE BE')
 
     //if user, no? create. move into helper?
     let userIDcookie = helpers.generateRandomString(1) + 'USER';

@@ -4,25 +4,18 @@
 <head>
   <title>Date Picker Page</title>
 
-  <meta charset="UTF-8" >
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+  <%- include('_partials/head') %>
 
-  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
-  <link rel="stylesheet" href="/vendor/border-box.css" />
-  <link rel="stylesheet" href="/styles/main.css" />
-  <link rel="stylesheet" href="/styles/layout.css" />
-  <link rel="stylesheet" href="/styles/calendar.css" />
+  <!-- <link rel="stylesheet" href="/styles/calendar.css" /> -->
+  <link rel="stylesheet" href="/styles/lg-calendar.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
 
-  <script src="/vendor/jquery-3.0.0.js"></script>
-  <script defer src="/scripts/app.js"></script>
-  <script defer src="/scripts/calendar_FE.js"></script>
-  <script defer src="/scripts/create_schedule_FE.js"></script>
+  <script defer type="module" src="/scripts/calendar_FE.js"></script>
+  <script defer type="module" src="/scripts/create_schedule_FE.js"></script>
 </head>
 
 <body>
-  <!-- Top nav bar (fixed) -->
+
   <nav>
     <span class="logo">ScheduleMe</span>
 
@@ -39,12 +32,10 @@
 
 <!-- rename pls -->
     <section id="middle-bar">
-      <div>
-      <label>Event type :</label>
-      <input id="event-type" type="text" name="event" placeholder="event type" required />
-        </div>
-      <div class="date" id="display-date"> DATE </div>
-      <div class="date"> CALENDAR </div>
+      <div class="form-group">
+       <label>Event type :</label>
+       <input id="event-type" type="text" name="event" placeholder="meeting, lunch, party, etc..." required />
+      </div>
 
       <div class="calendar-container">
         <header class="calendar-header">
@@ -75,15 +66,18 @@
         </div>
       </div>
 
+
+        <input id="submit-schedule-button" class="btn btn-lg btn-outline-dark"  type="submit" value="Submit">
+
+        <div class="toast" role="alert" aria-live="polite" aria-atomic="true" data-delay="10000">
+          <div role="alert" aria-live="assertive" aria-atomic="true">Schedule Submitted</div>
+
+      </div>
     </section>
 
 
 
     <section>
-
-      <div id="submit-schedule-button">
-          <button type="submit" id="submit-button">Submit</button>
-      </div>
 
     </section>
 

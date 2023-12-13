@@ -55,12 +55,12 @@ https://gist.github.com/mlocati/7210513
 primary user -> make schedule
 primary user -> send schedule
 secondary user -> recieve schedule options
-secondary user -> rank options & send to primary user
+secondary user -> rank options & send to primary user -> recieved schedules options in ranked formation, ranked by secondary user votes
 
 ## BUGS
 - user can click days of previous month, but registers as current month (dont add click to class "invalid" days )
 -creating schedule is not wiping old data, upon submit must clear
-- SECONDARY - dates shown out of order?
+x SECONDARY - dates shown out of order?
 ## CURRENT
 
 - file organization.
@@ -74,45 +74,21 @@ secondary user -> rank options & send to primary user
   x rename create schedule??? creating event, schedule already exists?? but this will change EVERYTHING
   - change route org. all primary in 1 file and all secondary.
 
-**- ADD functionality?
-  - add time to dates as well
-  x could we send to multiple people and aggrigate results? useful?s
-  - add schedule event types (date, appointment, meal, etc.)
-
 primary
-  - calendar dates change color when selected (not deselected)
-  - create date restriction on picker
-  x attach id to data sent to secondary user to help identify secondary user when data returned?? (use date id)
-  - after create schedule "submit" give url back to user. popup?
-  x main page -> set cookie = user ID (change database)
+
+  - after create schedule "submit" give url back to user. popup? and clear
   -should we prevent primary user from voting?
-  X change primary user routes. aggrigate page branch -> create or results (then do secondary??)
-  x create aggrigate page
-  x add percentages to results? (just for user, not in data)
-  - currently using percentage to render color, add more data for user??? chart?
-  x add who has voted to results page
-  x add buttons to navigate create & results (MAKE NAV BAR)
-  x get rid of date range in creating schedule
-  - add type of event (drop dow or text input)
   - results ejs - length of bar determined by % of votes given. intheory 0% will squish content but it doesnt... future implications? why does this work
   - once html inside date bars change, should fix bar being larger than triangle bug
+  - could change date type to drop down
 
 secondary
   - error handling for invalid schedule url
-  x user will click date, w cause popup (? maybe)
-  x pop up will contain post button
-  x once date is selected redirect to thank you page
+  - once date is selected redirect to thank you page
     - account for page reload?? avoid resend
-  x how to return selected date to primary user
-  - set up new page for this? complete schedule??
-  x how to make dates clickable since they are rendered w ejs
-  x pass id back to primary to log date??
   - check if user primary (primary cannot vote) => dif page?
-  x get name from secondary
-  x currently hard coded name, cookie and rank being sent to server/database, need to get info from user
-  - add ranking color to picked dates - REORDER DATES
+  - stop people from voting twice
 
-  - change color of ranked results and scaling of colors
   - focusing on mobile dev, create full screen layouts
     - may add calendar to full screen to fill space
 
@@ -134,4 +110,6 @@ FEATURES
 ## Considerations for future dev
   - create schedule event type input could change to drop down for ease
   - add expiry date (cannot vote past dates given?)
+  -currently not handling timezones, dates stored in UTC
+  - add time to dates as well
 
