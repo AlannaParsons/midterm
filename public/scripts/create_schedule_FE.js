@@ -3,7 +3,7 @@
 // - FIX - inactive dates are clickable.
 //        - ui for select and deselect
 //        - ui for on submit
-import {loadDateClickers} from "./modules/modules.js";
+import {loadDateClickers} from "/modules/modules.js";
 $(() => {
 
   loadDateClickers();

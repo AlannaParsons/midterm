@@ -1,7 +1,7 @@
 // Calendar provided by :
 //https://www.geeksforgeeks.org/how-to-design-a-simple-calendar-using-javascript/
 
-import {loadDateClickers} from "/modules/modules.js";
+import {loadDateClickers, autoSelectDates} from "/modules/modules.js";
 
 $(() => {
 
@@ -83,6 +83,7 @@ $(() => {
       day.innerHTML = lit;
 
       loadDateClickers();
+      autoSelectDates();
 
   }
 
