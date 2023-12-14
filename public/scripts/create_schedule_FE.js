@@ -3,10 +3,10 @@
 // - FIX - inactive dates are clickable.
 //        - ui for select and deselect
 //        - ui for on submit
-import {loadDateClickers} from "/modules/modules.js";
+import {datesGlobal} from "/modules/modules.js";
 $(() => {
 
-  loadDateClickers();
+  //loadDateClickers();
 
     //if <li class="inactive"> non clickable?????
   // get date of clicked, send to temp memory + add feedback to selected
@@ -35,6 +35,8 @@ $(() => {
   $('#submit-schedule-button').on('click', function(event) {
     event.preventDefault();
 
+    console.log('sub button')
+
     //required field or prompt once? dont NEED event type
     let eventtype = $("#event-type").val().trim()
     if (eventtype.length <= 0) {
@@ -44,7 +46,7 @@ $(() => {
       $.ajax({
         method: "POST",
         url: "/primary/create",
-        data: {dates: dates, eventType: eventtype},
+        data: {dates: datesGlobal, eventType: eventtype},
         success: function(data) {
           console.log('inside post success', data)
           $('.toast').toast('show');
@@ -56,7 +58,7 @@ $(() => {
       })
 
       //reset schedule
-      dates.length = 0;
+      datesGlobal.length = 0;
       //location.reload(calenar)
 
     }
