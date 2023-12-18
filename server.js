@@ -41,7 +41,6 @@ const schedule = require('./routes/schedule_BE');
 const userAcceptRoutes = require('./routes/invitee_BE');
 //const resultsRoutes = require('./routes/results_BE');
 //const createScheduleRoute = require('./routes/create_schedule_BE');
-const userRedirectRoute = require('./routes/base_BE');
 
 
 // Mount all resource routes
@@ -53,7 +52,6 @@ app.use('/users', usersRoutes);
 // used
 app.use('/primary', schedule);
 app.use('/secondary', userAcceptRoutes);
-app.use('/base', userRedirectRoute);
 //app.use('/primary/create', createScheduleRoute);
 //app.use('/primary/madeup', resultsRoutes);
 

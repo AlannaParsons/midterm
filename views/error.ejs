@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Error Page</title>
+
+  <%- include('_partials/head') %>
+
+</head>
+
+<body>
+  <!-- Top nav bar (fixed) -->
+  <nav>
+    <span class="logo">ScheduleMe</span>
+
+    <button id="new-tweet-button">
+      <div>
+      <span class="bold">Thank you</span>
+
+      </div>
+    </button>
+
+  </nav>
+
+  <main>
+
+    <span class="alert alert-warning" role="alert"><%= errMsg %></span>
+
+  </main>
+
+</body>
+
+</html>

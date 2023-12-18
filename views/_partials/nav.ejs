@@ -3,16 +3,17 @@
 
 <head>
   <title>Nav</title>
-
   <%- include('head') %>
-
 </head>
 
+<nav class="navbar fixed-top navbar-expand-lg bg-light justify-content-between px-2">
 
-<nav>
-  <span class="logo">ScheduleMe</span>
+  <a href="/primary">
+    <i class="fa-regular fa-calendar"></i>
+    <span class="navbar-brand mb-0 h1">ScheduleMe</span>
+  </a>
 
-  <a class="btn btn-outline-dark btn-sm" href="primary/create">
+  <a class="btn btn-outline-dark btn-sm" href="/primary/create">
     <i class="fa-regular fa-calendar"></i>
     <span class="bold">Create</span>
   </a>

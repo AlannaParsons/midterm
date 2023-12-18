@@ -86,6 +86,7 @@ $(() => {
         data: {dates: ranked_dates, name: username},
         success: function(data) {
           console.log('inside post success', data)
+          window.location.href = '/secondary/ty';
         },
         error : function(XMLHttpRequest, textStatus, errorThrown) {
           console.log('my error is : ' + errorThrown);

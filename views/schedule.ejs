@@ -22,7 +22,7 @@
     <section id="middle-bar">
 
       <div class="schedules-container">
-        <table class="table table-dark table-striped-columns table-hover">
+        <table class="table table-dark table-striped-columns">
           <thead>
             <tr>
               <th scope="col"> URL </th>
@@ -36,7 +36,7 @@
             <% for (let schedule of schedules) { %>
               <tr data-id="<%= schedule.id %>" name="container">
 
-                <td><%= schedule.url %></td>
+                <td> secondary/<%= schedule.url %></td>
                 <td><%= schedule.range %>  </td>
                 <td><%= schedule.count %></td>
                 <td><%= schedule.type %></td>

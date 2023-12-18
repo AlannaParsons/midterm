@@ -70,7 +70,6 @@ function percentageToColor(percentage) {
   var slider_x = sliderWidth*(percentage/100)-firstcolor_x;
   var ratio = slider_x/secondcolor_x;
 
-  //Get the color with pickHex(thx, less.js's mix function!)
   var result = getRGB( secondcolor,firstcolor, ratio );
 
   return rgbToHex(...result)
@@ -96,20 +95,39 @@ function getRGB(color1, color2, weight) {
   return rgb;
 }
 
-
 function monthToLong (num) {
   const monthNames = ["Jan.",	"Feb.",	"Mar.",	"Apr.",	"May",	"Jun.",	"Jul.",	"Aug.",	"Sep.",	"Oct.",	"Nov.",	"Dec."];
   return monthNames[num];
 }
 
+function dateStructuring(dates) {
 
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour:'numeric',
+    minute:'numeric'
+  };
+
+  for (let date of dates) {
+    let newDate =new Date(date.utc)
+
+    options.timeZone = 'UTC';
+    options.timeZoneName = 'short';
+    console.log(newDate.toLocaleString('en-US', options))
+
+  }
+
+  return dates;
+}
 
 
 module.exports = {
   generateRandomString,
   percentageToColor,
-  monthToLong
+  monthToLong,
+  dateStructuring
 };
 
-// loggedin
-// req.cookies.cookieName;

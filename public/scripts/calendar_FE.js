@@ -65,7 +65,7 @@ $(() => {
               && month === new Date().getMonth()
               && year === new Date().getFullYear()
               ? "active"
-              : "date";
+              : "calendar-date";
           lit += `<li class="${isToday}">${i}</li>`;
       }
 

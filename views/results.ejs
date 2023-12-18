@@ -18,6 +18,12 @@
   <%- include('_partials/nav') %>
 
   <!-- Page-specific (main) content here -->
+  <header>
+    Results for type  <%= schedule.type %>
+
+
+  </header>
+
   <main>
 
 
@@ -25,7 +31,7 @@
 
       <h5>Contributors:</h5>
       <% for (let voter of voters) { %>
-        <div class="date"> <%= voter.voter_name %> </div>
+        <div class="date"> <%= voter.name %> </div>
       <% } %>
 
     </section>
@@ -37,14 +43,15 @@
       <div class="dates-container">
 
         <% for (let result of results) { %>
-          <span class="date-container" name="container" style="background-color:<%= result.style %>; width: <%= result.length %>;" >
-            <%= result.sum %> <%= result.utc %> <%= result.dateid%>
+          <div class="date-container" name="container" style="background-color:<%= result.style %>; width: <%= result.length %>;" >
+            <div class="date-display"><%= result.utc %></div>
 
-            <span class="triangle triangle-left"></span>
-            <span class="result-bar-shrink" style="width: <%= `${100 - result.percentage}%` %>;" >
-              <%= `${result.percentage}%` %>
+            <span class="triangle triangle-left">
+              <span class="percentage"><%= `${result.percentage}%` %></span>
             </span>
-          </span>
+            <div class="result-bar-shrink" style="width: <%= `${100 - result.percentage}%` %>;" >
+            </div>
+          </div>
 
         <% } %>
 

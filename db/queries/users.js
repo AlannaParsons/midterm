@@ -117,12 +117,12 @@ const db = require('../connection');
  * @return {Promise<{}>} A promise to the user.
  *
  */
- const addVotes = function (date_id, name, cookie, vote) {
+ const addVotes = function (date_id, voter_id, vote) {
 
   return db
-  .query(`INSERT INTO votes (date_id, voter_name, voter_cookie, rank)
-          VALUES ($1, $2, $3, $4)
-          ;`, [date_id, name, cookie, vote])
+  .query(`INSERT INTO votes (date_id, voter_id, rank)
+          VALUES ($1, $2, $3)
+          ;`, [date_id, voter_id, vote])
   .then((result) => {
     //console.log('results add',result.rows[0])
     return result.rows[0];
@@ -133,19 +133,43 @@ const db = require('../connection');
 
 };
 
+/**
+ * addVoter() - add voter to db
+ *
+ * @param {Strings} name, cookie
+ * @return {Promise<{}>}
+ *    id of created voter
+ */
+  const addVoter = function (name, cookie) {
+
+    return db
+    .query(`INSERT INTO voters (name, cookie)
+            VALUES ($1, $2)
+            RETURNING id
+            ;`, [name, cookie])
+    .then((result) => {
+      console.log('add voter',result.rows[0])
+      return result.rows[0];
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+
+  };
+
 
 /**
- * USED BY SERVER -> not userqueries? seperate?
- * CHANGE TO BY ID... WHEN I FIND WHERE ITS USED
- * get schdule id from database using url. load into html when given url?
+ * getSchedule() - get specific schedule by given url
+ *
  * @param {string} url
- * @return {Promise<{}>} A promise with schedule id given url
+ * @return {Promise<{}>}
+ *  recieve id and type
  *
  */
  const getSchedule = function (url) {
 
   return db
-  .query(`SELECT id FROM schedules
+  .query(`SELECT id, type FROM schedules
           WHERE url LIKE ($1)
           ;`, [url])
   .then((result) => {
@@ -159,17 +183,17 @@ const db = require('../connection');
 };
 
 /**
- * USED BY SERVER -> not userqueries? seperate?
  *
- * get schdule id from database using url. load into html when given url?
- * @param {string} url
- * @return {Promise<{}>} A promise with schedule id given url
+ * @param {string} userCookie
+ * @return {Promise<{}>}
+ *  get all schedules made by given user:
+ *    schedules.id, url, type, voter_count
  *
  */
  const getScheduleByUser = function (userCookie) {
 
   return db
-  .query(`SELECT schedules.id, url, type, COUNT(DISTINCT votes.voter_name) AS voter_count FROM schedules
+  .query(`SELECT schedules.id, url, type, COUNT(DISTINCT votes.voter_id) AS voter_count FROM schedules
           LEFT JOIN dates ON schedules.id = dates.schedule_id
           LEFT JOIN votes ON dates.id = votes.date_id
           WHERE user_cookie LIKE ($1)
@@ -186,11 +210,11 @@ const db = require('../connection');
 };
 
 /**
- * USED BY SERVER -> not userqueries? seperate?
- *
+ * UNUSED?
  * get schdule id from database using url. load into html when given url?
- * @param {string} url
- * @return {Promise<{}>} A promise with schedule id given url
+ * @param {string} id
+ * @return {Promise<{}>}
+ *
  *
  */
  const joinScheduleDates = function (id) {
@@ -203,7 +227,7 @@ const db = require('../connection');
           WHERE schedule_id = ($1)
           ;`, [id])
   .then((result) => {
-    console.log('schedules w join?:',result.rows);
+    //console.log('schedules w join?:',result.rows);
     return result.rows;
   })
   .catch((err) => {
@@ -213,11 +237,11 @@ const db = require('../connection');
 };
 
 /**
- * USED BY SERVER -> not userqueries? seperate?
  *
- * get dates to create schedule given id.
- * @param {string} schedule_id
- * @return {Promise<{}>} A promise to the user.
+ * @param {number} schedule_id
+ * @return {Promise<{}>}
+ *  dates from included in given schedule
+ *    in proper date order
  *
  */
  const getDates = function (schedule_id) {
@@ -228,7 +252,7 @@ const db = require('../connection');
           ORDER BY dates.utc
           ;`, [schedule_id])
   .then((result) => {
-    console.log('dates get?:',result.rows);
+    //console.log('dates get?:',result.rows);
     return result.rows;
   })
   .catch((err) => {
@@ -239,20 +263,21 @@ const db = require('../connection');
 
 
 /**
- * USED BY SERVER -> given schedule_id, get summed results for each date on schedule
  *
+ * @param {number} schedule_id
+ * @return {Promise<{}>}
+ *  dates for given schedule (.utc, .id, .schedule_id ),  as well as
+ *  sumed rankings which are used to tabulate final ranked results
  *
- * @param {string} url
- * @return {Promise<{}>} A promise with schedule id given url
  * left outer join??? revisit
  * so ugly..... can i alias COALESCE(SUM(votes.rank), '0') sooner??
  * double check later that schedule id is filtering on both levels
  */
- const getVotes = function (schedule_id) {
+ const getResults = function (schedule_id) {
 
   return db
   .query(`
-          SELECT COALESCE(SUM(votes.rank), '0') AS results, dates.utc,
+          SELECT COALESCE(SUM(votes.rank), '0') AS rank_sum, dates.utc,
             dates.id AS dateid, dates.schedule_id,
             (COALESCE(SUM(votes.rank), '0')* 100/t.total ) AS percentage
             FROM ((SELECT SUM(rank) as total
@@ -266,7 +291,7 @@ const db = require('../connection');
           ORDER BY COALESCE(SUM(votes.rank), '0') DESC
           ;`, [schedule_id])
   .then((result) => {
-    console.log('tesst votes get?:',result.rows);
+    //console.log('tesst votes get?:',result.rows);
     return result.rows;
   })
   .catch((err) => {
@@ -275,23 +300,51 @@ const db = require('../connection');
 
 };
 
+//we know this works before changing the db
+// const getResults = function (schedule_id) {
+
+//   return db
+//   .query(`
+//           SELECT COALESCE(SUM(votes.rank), '0') AS rank_sum, dates.utc,
+//             dates.id AS dateid, dates.schedule_id,
+//             (COALESCE(SUM(votes.rank), '0')* 100/t.total ) AS percentage
+//             FROM ((SELECT SUM(rank) as total
+//               FROM votes
+//               LEFT OUTER JOIN dates ON dates.id = votes.date_id
+//               WHERE dates.schedule_id = ($1))) AS t,
+//            dates
+//           LEFT OUTER JOIN votes ON dates.id = votes.date_id
+//           WHERE schedule_id = ($1)
+//           GROUP BY dates.schedule_id, dates.id, t.total
+//           ORDER BY COALESCE(SUM(votes.rank), '0') DESC
+//           ;`, [schedule_id])
+//   .then((result) => {
+//     //console.log('tesst votes get?:',result.rows);
+//     return result.rows;
+//   })
+//   .catch((err) => {
+//     console.log(err.message);
+//   });
+
+// };
+
 /**
- * USED BY SERVER ->
  *
- * @param {string} url
- * @return {Promise<{}>} A promise with schedule id given url
- * add DISTINCT? not necessary
+ * @param {number} schedule_id
+ * @return {Promise<{}>}
+ *  all voters names who have voted on given schedule
  */
  const getVoters = function (schedule_id) {
 
   return db
-  .query(`SELECT voter_name FROM votes
+  .query(`SELECT name FROM voters
+          JOIN votes ON votes.voter_id = voters.id
           JOIN dates ON dates.id = votes.date_id
           WHERE dates.schedule_id = ($1)
-          GROUP BY voter_name
+          GROUP BY name
           ;`, [schedule_id])
   .then((result) => {
-    console.log('tesst votes get?:',result.rows);
+    //console.log('tesst votes get?:',result.rows);
     return result.rows;
   })
   .catch((err) => {
@@ -301,21 +354,20 @@ const db = require('../connection');
 };
 
 /**
- * USED BY SERVER -> add to schedule get calls??? extra joins
  *
- * @param {string} url
- * @return {Promise<{}>} A promise with schedule id given url
- * add DISTINCT? not necessary
+ * @param {number} schedule_id
+ * @return {Promise<{}>}
+ *    number of people who have voted on given schedule
  */
  const getVoterCount = function (schedule_id) {
 
   return db
-  .query(`SELECT COUNT(DISTINCT voter_name) FROM votes
+  .query(`SELECT COUNT(DISTINCT voter_id) FROM votes
           JOIN dates ON dates.id = votes.date_id
           WHERE dates.schedule_id = ($1)
           ;`, [schedule_id])
   .then((result) => {
-    console.log('get number of voters per?:',result.rows);
+    //console.log('get number of voters per?:',result.rows);
     return result.rows;
   })
   .catch((err) => {
@@ -357,4 +409,4 @@ module.exports = {
   addUser, existingUser,
   addSchedule, getSchedule, getScheduleByUser, joinScheduleDates,
   addDates, getDates,
-  addVotes, getVotes, getVoters, getVoterCount };
+  addVotes, addVoter, getResults, getVoters, getVoterCount };

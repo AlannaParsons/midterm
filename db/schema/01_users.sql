@@ -13,6 +13,7 @@
 DROP TABLE IF EXISTS schedules CASCADE;
 DROP TABLE IF EXISTS dates CASCADE;
 DROP TABLE IF EXISTS votes CASCADE;
+DROP TABLE IF EXISTS voters CASCADE;
 
 -- should schedules be array. possible? athena
 CREATE TABLE schedules (
@@ -33,13 +34,18 @@ CREATE TABLE dates (
 
 );
 
+CREATE TABLE voters (
+  id SERIAL PRIMARY KEY NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  cookie VARCHAR(255) NOT NULL
+);
+
 -- ranks are weighted by amount of dates in schedule
 CREATE TABLE votes (
   id SERIAL PRIMARY KEY NOT NULL,
   date_id INTEGER REFERENCES dates(id),
-  voter_name VARCHAR(255) NOT NULL,
-  voter_cookie VARCHAR(255) NOT NULL,
+  voter_id INTEGER REFERENCES voters(id),
   rank INTEGER NOT NULL
-
 );
+
 

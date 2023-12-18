@@ -53,14 +53,16 @@ https://gist.github.com/mlocati/7210513
 
 
 primary user -> make schedule
-primary user -> send schedule
-secondary user -> recieve schedule options
+primary user -> see all schedules
+primary user -> send schedule via 3rd party
+secondary user -> recieve schedule date options
 secondary user -> rank options & send to primary user -> recieved schedules options in ranked formation, ranked by secondary user votes
 
 ## BUGS
-- user can click days of previous month, but registers as current month (dont add click to class "invalid" days )
--creating schedule is not wiping old data, upon submit must clear
+x user can click days of previous month, but registers as current month (dont add click to class "invalid" days )
+xcreating schedule is not wiping old data, upon submit must clear
 x SECONDARY - dates shown out of order?
+- 0 contributors = results page problem
 ## CURRENT
 
 - file organization.
@@ -71,16 +73,16 @@ x SECONDARY - dates shown out of order?
     - scss full screen/responsive naming? or seperate folder?
   - do all routes need seperate files?
     - consolidate primary and secondary routes
-  x rename create schedule??? creating event, schedule already exists?? but this will change EVERYTHING
   - change route org. all primary in 1 file and all secondary.
 
 primary
 
-  - after create schedule "submit" give url back to user. popup? and clear
+  - after create schedule "submit" give url back to user. popup? and clear... redirect
   -should we prevent primary user from voting?
   - results ejs - length of bar determined by % of votes given. intheory 0% will squish content but it doesnt... future implications? why does this work
   - once html inside date bars change, should fix bar being larger than triangle bug
   - could change date type to drop down
+  - maybe take hover off inactive dates (on create calendar)
 
 secondary
   - error handling for invalid schedule url
@@ -94,11 +96,9 @@ secondary
 
 
 ## ADDRESS
-  x typing. control data as it moves around. make plan for when date should be OBJ (in database) and when it should be DATE type (all server and front end use) TIME STAMP. make helpers
-  full change to utc
+
   - if sending to multiple people, how do we knpw when pole is over?
     must hold results, add to database. expiry?? expiry set by last possible date of schedule or first
-  - show in calendar? but times might make difficult? zoom into day?
   - no login. app functions via cookies
   - can only vote once per cookie
   - could use internal calendar of phones?
@@ -112,4 +112,35 @@ FEATURES
   - add expiry date (cannot vote past dates given?)
   -currently not handling timezones, dates stored in UTC
   - add time to dates as well
+  - add created date to events
+
+## Stack Requirements
+Your projects must use:
+
+ES6 for server-side (NodeJS) code
+NodeJS
+Express
+RESTful routes
+One or more CSS or UI "framework"s:
+jQuery
+A CSS preprocessor such as SASS, Stylus, or PostCSS for styling -- or CSS Custom properties and no CSS preprocessor
+PostgreSQL and pg (with promises) for DBMS
+git for version control
+
+Option 9: Schoodle
+Doodle is great for scheduling events within a group. Your job is to create a simpler, more modern version of it.
+
+Requirements:
+visitors can create an event proposal in much the same way as Doodle, by specifying:
+event title and description
+their own name and email
+organizers can then send the unique URL to possible attendees via their own communication workflow (email, Slack, Messenger, etc.)
+attendees visit the unique URL and:
+specify their name and email
+specify their availability (yes/no only) for each possible time slot
+view all responses including their own
+modify their response
+the unique URL should be secret and thus not use a simple auto-incrementing integer but instead a larger ID that is harder to guess (much like how secret gists work on GitHub)
+note: this app does not follow the typical user authentication process: users don't need to register or log in and the only way to access the Schoodles is via links
+
 

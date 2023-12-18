@@ -1,8 +1,20 @@
+// the entire reason from the modules....
 let datesGlobal = [];
 
+  /**
+ * loadDateClickers() -
+ *  attach click events to individual calendar dates
+ *  pushes and removes dates from datesGlobal as necessary
+ *
+ * may no longer need to be seperate module. move into calendar_FE??
+ * holds similar process as invitee_FE break out into helpers?
+ *
+ * @return {datesGlobal}
+ *  globaldates: ['Fri, 01 Dec 2023 07:00:00 GMT', etc...]
+* */
 function loadDateClickers() {
 
-  $('.date').on('click', function(event) {
+  $('.calendar-date').on('click', function(event) {
     event.preventDefault();
     $(this).toggleClass("select");
 
@@ -15,34 +27,31 @@ function loadDateClickers() {
     let stringdate = `${month} ${date_clicked}, ${year}`;
     let date = new Date(stringdate);
 
-
-
     if (theClass.includes('select')) {
-      console.log('add to list')
-
-
-
       //utc or iso...
       datesGlobal.push(date.toUTCString())
-
-
-      alert(stringdate);
     } else {
-      console.log('remove from list')
       let ind = datesGlobal.indexOf(date.toUTCString());
       datesGlobal.splice(ind, 1);
     }
-
-    console.log('globaldates:',datesGlobal)
-
   })
 
   return datesGlobal;
 }
 
+  /**
+ * autoSelectDates() -
+ *  using dates from datesGlobal, set calendar dates as selected
+ *  as user traverses through months
+ *
+ *  if month year of calendar matches item in globalDates, find corresponding date and toggle
+ *
+ * may no longer need to be seperate module. move into calendar_FE??
+ *
+ * @return {undefined}
+* */
 function autoSelectDates() {
-  console.log('autoselectrun')
-  let [calendarMonth, calendarYear] = $(".calendar-current-date").html().split(' ');
+  let [calendarMonth, calendarYear] = $('.calendar-current-date').html().split(' ');
   let calendarDate = new Date(`${calendarMonth} 1,${calendarYear}`)
 
   for (let selectedDate of datesGlobal) {
@@ -51,22 +60,16 @@ function autoSelectDates() {
     if (selectedDate.getUTCMonth() === calendarDate.getUTCMonth() &&
     selectedDate.getFullYear() === calendarDate.getFullYear()) {
 
-      let listItems = $(".calendar-dates li");
+      let datesList = $(".calendar-dates li");
 
-      listItems.each(function(idx, li) {
-
-        if (Number($(li).html()) === selectedDate.getUTCDate() ) {
-          console.log('DATE FOUND', $(li).html(), selectedDate.getUTCDate() )
-          $(li).toggleClass("select");
+      datesList.each(function(idx, li) {
+        if (Number($(li).html()) === selectedDate.getUTCDate() &&
+        !($(li).attr('class').includes('inactive'))) {
+          $(li).toggleClass('select');
         }
-
-
-
-    });
-
+      });
     }
   }
-
 }
 
 export {loadDateClickers, autoSelectDates, datesGlobal};
