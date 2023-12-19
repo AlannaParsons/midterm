@@ -8,6 +8,7 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 
 const { cookieMiddleware } = require('./middleware')
+const dbQueries = require("./db/queries/queries");
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -42,6 +43,18 @@ app.use('/secondary', secondaryUser);
 app.get('/', (req, res) => {
   res.render('index');
 });
+
+app.post("/", async function(req, res) {
+
+  try {
+    const cookie = req.cookies.cookieName.toString();
+    const user_id = await dbQueries.addUser(req.body.userName, req.body.inputEmail, cookie);
+    return res.sendStatus(201).send(user_id);
+
+  } catch (e) {
+    return res.sendStatus(400).send(e);
+  }
+})
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);

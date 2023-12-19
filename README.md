@@ -95,6 +95,7 @@ FEATURES
   -- ranks are weighted by amount of dates in schedule
   -happy path complete, add all error handling
   - add try catch for async db calls
+  - add more security. no current BE protection?
 
 ## Considerations for future dev
   - create schedule event type input could change to drop down for ease

@@ -3,9 +3,11 @@
 <html lang="en">
 
 <head>
-  <title>Error Page</title>
+  <title>Home Page</title>
 
   <%- include('_partials/head') %>
+
+  <script defer src="/scripts/home_FE.js"></script>
 
 </head>
 
@@ -14,10 +16,26 @@
   <%- include('_partials/nav') %>
 
   <main>
+    <section id="middle-bar">
     <div class="jumbotron">
       <h1 class="display-4">WELCOME TO SCHEDULEME</h1>
-
+      <p class="lead">Start scheduling.</p>
+      <hr class="my-4">
     </div>
+
+    <form id="submit-user" class="col-lg-4">
+      <div class="form-group">
+        <label for="userName">Name</label>
+        <input type="text" class="form-control" id="userName" placeholder="Name">
+      </div>
+      <div class="form-group">
+        <label for="inputEmail">Email address</label>
+        <input type="email" class="form-control" id="inputEmail" placeholder="Enter email">
+      </div>
+      <button type="submit" class="btn btn-primary float-end">Submit</button>
+    </form>
+
+  </section>
   </main>
 
 </body>

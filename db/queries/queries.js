@@ -1,18 +1,40 @@
 const db = require('../connection');
 
 /**
+ * addUser(name, email, cookie) - Primary user adds self as user
+ *
+ * @param {strings} name, email, cookie
+ * @return {Promise<{}>} A promise to the user.
+ *    id of created user
+ */
+ const addUser = function (name, email, cookie) {
+
+  return db
+  .query(`INSERT INTO users (name, email, cookie)
+          VALUES ($1, $2, $3)
+          RETURNING id;`, [name, email, cookie])
+  .then((result) => {
+    return result.rows[0].id;
+  })
+  .catch((e) => {
+    throw new Error('Error adding user')
+  });
+
+};
+
+/**
  * addSchedule(user, url, type) - Primary user adds a new schedule data to the database
  *
  * @param {strings} user, url, type
  * @return {Promise<{}>} A promise to the user.
  *    id of created schedule
  */
- const addSchedule = function (user, url, type) {
+ const addSchedule = function (user_id, url, type) {
 
   return db
-  .query(`INSERT INTO schedules (user_cookie, url, type)
+  .query(`INSERT INTO schedules (user_id, url, type)
           VALUES ($1, $2, $3)
-          RETURNING id;`, [user, url, type])
+          RETURNING id;`, [user_id, url, type])
   .then((result) => {
     return result.rows[0].id;
   })
@@ -24,8 +46,8 @@ const db = require('../connection');
 
 /**
  * addDates(date, sched_id)
- *
  * expected to be called in for loop to add all dates to given schedule
+ *
  * @param {string, number} utc, sched_id
  * @return {Promise<{}>} Nothing useful. change?
  *
@@ -124,9 +146,10 @@ const db = require('../connection');
 
   return db
   .query(`SELECT schedules.id, url, type, COUNT(DISTINCT votes.voter_id) AS voter_count FROM schedules
-          LEFT JOIN dates ON schedules.id = dates.schedule_id
+          JOIN users ON schedules.user_id = users.id
+          JOIN dates ON schedules.id = dates.schedule_id
           LEFT JOIN votes ON dates.id = votes.date_id
-          WHERE user_cookie LIKE ($1)
+          WHERE users.cookie LIKE ($1)
           GROUP BY schedules.id
           ;`, [userCookie])
   .then((result) => {
@@ -134,6 +157,28 @@ const db = require('../connection');
   })
   .catch(() => {
     throw new Error('Error getting schedule user')
+  });
+
+};
+
+/**
+ * getUser(cookie) - get user id from cookie
+ *
+ * @param {string} cookie
+ * @return {Promise<{}>}
+ *
+ */
+ const getUser= function (cookie) {
+
+  return db
+  .query(`SELECT id FROM users
+          WHERE cookie LIKE ($1)
+          ;`, [cookie])
+  .then((result) => {
+    return result.rows[0];
+  })
+  .catch(() => {
+    throw new Error('Error getting user')
   });
 
 };
@@ -148,7 +193,6 @@ const db = require('../connection');
  *
  */
  const getDates = function (schedule_id) {
-
   return db
   .query(`SELECT * FROM dates
           WHERE schedule_id = ($1)
@@ -254,6 +298,7 @@ const db = require('../connection');
 };
 
 module.exports = {
+  addUser,
   addVoter, getVoters, getVoterCount,
   addSchedule, getScheduleByURL, getScheduleByUser,
   addDates, getDates,

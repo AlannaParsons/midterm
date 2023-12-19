@@ -9,11 +9,11 @@ function cookieMiddleware(req, res, next) {
   if (cookie === undefined) {
     // no: set a new cookie
     const testCookie = 1111111111111111;
-    res.cookie('cookieName',testCookie, { maxAge: 900000, httpOnly: true });
+    //res.cookie('cookieName', cookie, { maxAge: 900000, httpOnly: true });
 
     var randomNumber=Math.random().toString();
     randomNumber=randomNumber.substring(2,randomNumber.length);
-    //res.cookie('cookieName',randomNumber, { maxAge: 900000, httpOnly: true });
+    res.cookie('cookieName',randomNumber, { maxAge: 900000, httpOnly: true });
     console.log('cookie created successfully');
 
 
