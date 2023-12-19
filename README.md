@@ -59,25 +59,17 @@ secondary user -> recieve schedule date options
 secondary user -> rank options & send to primary user -> recieved schedules options in ranked formation, ranked by secondary user votes
 
 ## BUGS
-x user can click days of previous month, but registers as current month (dont add click to class "invalid" days )
-xcreating schedule is not wiping old data, upon submit must clear
-x SECONDARY - dates shown out of order?
-- 0 contributors = results page problem
+
+
 ## CURRENT
 
 - file organization.
   - seperate frontend and backend helpers
   - split "userqueries", serverqueries??
-  - clean up example files
-  x renames for consistancy (follow 'views' file naming convensions)
     - scss full screen/responsive naming? or seperate folder?
-  - do all routes need seperate files?
-    - consolidate primary and secondary routes
-  - change route org. all primary in 1 file and all secondary.
 
 primary
 
-  - after create schedule "submit" give url back to user. popup? and clear... redirect
   -should we prevent primary user from voting?
   - results ejs - length of bar determined by % of votes given. intheory 0% will squish content but it doesnt... future implications? why does this work
   - once html inside date bars change, should fix bar being larger than triangle bug
@@ -86,10 +78,8 @@ primary
 
 secondary
   - error handling for invalid schedule url
-  - once date is selected redirect to thank you page
-    - account for page reload?? avoid resend
   - check if user primary (primary cannot vote) => dif page?
-  - stop people from voting twice
+  - change addVotes to batching system to avoid errors
 
   - focusing on mobile dev, create full screen layouts
     - may add calendar to full screen to fill space
@@ -99,13 +89,12 @@ secondary
 
   - if sending to multiple people, how do we knpw when pole is over?
     must hold results, add to database. expiry?? expiry set by last possible date of schedule or first
-  - no login. app functions via cookies
-  - can only vote once per cookie
   - could use internal calendar of phones?
 FEATURES
   (add notes to top description?)
   -- ranks are weighted by amount of dates in schedule
   -happy path complete, add all error handling
+  - add try catch for async db calls
 
 ## Considerations for future dev
   - create schedule event type input could change to drop down for ease
