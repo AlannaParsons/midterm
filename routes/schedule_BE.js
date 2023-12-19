@@ -8,7 +8,7 @@
 
 const express = require('express');
 const router  = express.Router();
-const userQueries = require("../db/queries/queries");
+const dbQueries = require("../db/queries/queries");
 
 const helpers = require("../helpers/helpers");
 
@@ -22,12 +22,12 @@ router.get('/', async function (req, res) {
   //rename...to what
 
   //get schedules created by user
-  const schedules = await userQueries.getScheduleByUser(cookie);
+  const schedules = await dbQueries.getScheduleByUser(cookie);
 
   console.log('whats going on then', cookie, schedules)
   //get all dates of all schedules, make object to hold data
   for (let schedule of schedules) {
-    let UTCdates = await userQueries.getDates(schedule.id);
+    let UTCdates = await dbQueries.getDates(schedule.id);
 
     //pull info out of utc for showing
     //var result = UTCdates.map(date => ({ month: date.utc.getUTCMonth}));
@@ -39,8 +39,8 @@ router.get('/', async function (req, res) {
     ' - ' +
     `${helpers.monthToLong(max.getMonth())} ${max.getDate()} ${max.getFullYear()}`;
 
-    //let currentVotes = await userQueries.getVoterCount(schedule.id);
-    //let currentVoters = await userQueries.getVoters(schedule.id);
+    //let currentVotes = await dbQueries.getVoterCount(schedule.id);
+    //let currentVoters = await dbQueries.getVoters(schedule.id);
     //console.log('schedule bhow many voted:',currentVoters)
 
     const scheduleOBJ = {
@@ -81,16 +81,16 @@ router.post("/create", async function(req, res) {
 
     //rem to set cookie
     //req.session.user_id = cookie
-    //userQueries.existingUser(req.cookies.cookieName)
+    //dbQueries.existingUser(req.cookies.cookieName)
 
 
     //const id = await addUser()
     const id = req.cookies.cookieName.toString();
 
     //new user added create new schedule then add dates w schedule id
-    let schedule_id = await userQueries.addSchedule(id, randomURL, req.body.eventType);
+    let schedule_id = await dbQueries.addSchedule(id, randomURL, req.body.eventType);
     for (let dateStr of req.body.dates) {
-      userQueries.addDates(dateStr, schedule_id);
+      dbQueries.addDates(dateStr, schedule_id);
     }
 
     res.status(201).json('valid request: POST body');
@@ -99,7 +99,7 @@ router.post("/create", async function(req, res) {
 })
 
 router.get('/:uniq_url', async function (req, res) {
-  const schedule = await userQueries.getScheduleByURL(req.params.uniq_url);
+  const schedule = await dbQueries.getScheduleByURL(req.params.uniq_url);
 
   if (!schedule) {
     const templateVars = {
@@ -108,8 +108,8 @@ router.get('/:uniq_url', async function (req, res) {
     res.render('error', templateVars)
   } else {
 
-    const results = await userQueries.getResults(schedule.id);
-    const voters = await userQueries.getVoters(schedule.id);
+    const results = await dbQueries.getResults(schedule.id);
+    const voters = await dbQueries.getVoters(schedule.id);
     //largest result is first (ordered by db). used to set color of dates
     let max = results[0].rank_sum
     const formatOptions = {
