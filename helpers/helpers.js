@@ -100,24 +100,24 @@ function monthToLong (num) {
   return monthNames[num];
 }
 
+/**
+ * dateStructuring(dates) - get all dates from given schedule id
+ *
+ * @param {array of objects} dates
+ * @return {array of strings} altered array of dates. utc keyvalue formatted
+ *
+ */
 function dateStructuring(dates) {
 
-  const options = {
-    weekday: 'long',
+  const formatOptions = {
+    weekday: 'short',
     year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour:'numeric',
-    minute:'numeric'
+    month: 'short',
+    day: 'numeric'
   };
 
   for (let date of dates) {
-    let newDate =new Date(date.utc)
-
-    options.timeZone = 'UTC';
-    options.timeZoneName = 'short';
-    console.log(newDate.toLocaleString('en-US', options))
-
+    date['utc'] = new Date(date.utc).toLocaleDateString(undefined, formatOptions);
   }
 
   return dates;

@@ -59,6 +59,7 @@ secondary user -> recieve schedule date options
 secondary user -> rank options & send to primary user -> recieved schedules options in ranked formation, ranked by secondary user votes
 
 ## BUGS
+- error handling not working as expected
 
 
 ## CURRENT
@@ -75,6 +76,7 @@ primary
   - once html inside date bars change, should fix bar being larger than triangle bug
   - could change date type to drop down
   - maybe take hover off inactive dates (on create calendar)
+  - dates are structured differently for primary and secondary UI... problem? adding complexity
 
 secondary
   - error handling for invalid schedule url

@@ -15,7 +15,8 @@ CREATE TABLE schedules (
   id SERIAL PRIMARY KEY NOT NULL,
   user_id INTEGER REFERENCES users(id),
   url VARCHAR(255) NOT NULL,
-  type VARCHAR(255)
+  type VARCHAR(255),
+  description VARCHAR(255)
 );
 
 CREATE TABLE dates (

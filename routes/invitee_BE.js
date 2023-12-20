@@ -35,6 +35,7 @@ router.get('/:uniq_url', async function (req, res) {
 
     if (voterCookies.includes(cookie)) {
       const templateVars = {
+        //allow edit here
         errMsg: "User has already voted"
       };
       res.render('error', templateVars)
@@ -42,8 +43,10 @@ router.get('/:uniq_url', async function (req, res) {
     }
 
     const dates = await dbQueries.getDates(schedule.id);
+    const structuredDates = helpers.dateStructuring(dates)
+    console.log('structured?:', structuredDates)
     const templateVars = {
-      dates: helpers.dateStructuring(dates)
+      dates: structuredDates
     };
 
     res.render('invitee', templateVars)
@@ -57,22 +60,26 @@ router.get('/:uniq_url', async function (req, res) {
 
 
 router.post("/:uniq_url", async function(req, res) {
-
+  console.log('postingBE')
   try {
+    console.log('postingBE trying')
     const schedule = await dbQueries.getScheduleByURL(req.params.uniq_url);
     const dates = await dbQueries.getDates(schedule.id);
     const cookie = req.cookies.cookieName.toString();
-    const voter = await dbQueries.addVoter(req.body.name, cookie);
-
-    //change to "batching". try probably wont catch this because loop
+    const voter = await dbQueries.addVoter(req.body.name, req.body.email, cookie);
+    //change to "batching". try probably wont catch this because loop. or internal catch if lazy
+    //ranking is handled here. ranks based of order of array given by user.
+    // ranked based on # of dates in schedule
     for (let i in req.body.dates) {
       dbQueries.addVotes(req.body.dates[i], voter.id, dates.length-i);
     }
-    //return voter, successful creation?. or votes
-    return res.status(201);
+    //why doesnt ajax like this >>
+    //return res.status(201);
+    return res.status(201).send('success create');
 
   } catch (e) {
-    return res.status(400).send(e);
+
+    return res.status(400).json(e.message);
   }
 })
 

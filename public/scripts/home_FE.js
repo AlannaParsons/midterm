@@ -17,7 +17,7 @@ $(() => {
 
     console.log(userName,inputEmail)
 
-    if (userName.length <= 0 && inputEmail.length <= 0) {
+    if (userName.length <= 0 || inputEmail.length <= 0) {
       alert("please enter valid identification")
     } else {
 

@@ -76,7 +76,7 @@ $(() => {
 
       // Update the text of the current date element
       // with the formatted current month and year
-      currdate.innerText = `${months[month]} ${year}`;
+      currdate.innerHTML = `${months[month]} ${year}`;
 
       // update the HTML of the dates element
       // with the generated calendar
@@ -175,17 +175,17 @@ $(() => {
 
 
 
-  function getCurrentDate() {
-    let date;
-    let options = { weekday: 'long', month: 'long', day: 'numeric' };
+  // function getCurrentDate() {
+  //   let date;
+  //   let options = { weekday: 'long', month: 'long', day: 'numeric' };
 
-    date = new Date;
-    formattedDate = date.toLocaleDateString("en-US", options);
+  //   date = new Date;
+  //   let formattedDate = date.toLocaleDateString("en-US", options);
 
-    document.querySelector("#display-date").textContent =  formattedDate;
-  }
+  //   document.querySelector("#display-date").textContent =  formattedDate;
+  // }
 
-  getCurrentDate();
+  // getCurrentDate();
 })
 
 

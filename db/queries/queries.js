@@ -29,16 +29,17 @@ const db = require('../connection');
  * @return {Promise<{}>} A promise to the user.
  *    id of created schedule
  */
- const addSchedule = function (user_id, url, type) {
+ const addSchedule = function (user_id, url, type, description) {
 
   return db
-  .query(`INSERT INTO schedules (user_id, url, type)
-          VALUES ($1, $2, $3)
-          RETURNING id;`, [user_id, url, type])
+  .query(`INSERT INTO schedules (user_id, url, type, description)
+          VALUES ($1, $2, $3, $4)
+          RETURNING id;`, [user_id, url, type, description])
   .then((result) => {
     return result.rows[0].id;
   })
-  .catch(() => {
+  .catch((e) => {
+    console.log(e)
     throw new Error('Error adding schedule')
   });
 
@@ -61,7 +62,7 @@ const db = require('../connection');
   .then((result) => {
     return result.rows[0];
   })
-  .catch(() => {
+  .catch((e) => {
     throw new Error('Error adding dates')
   });
 
@@ -95,13 +96,13 @@ const db = require('../connection');
  * @param {Strings} name, cookie
  * @return {Promise<{}>}  id of created voter
  */
-  const addVoter = function (name, cookie) {
+  const addVoter = function (name, email, cookie) {
 
     return db
-    .query(`INSERT INTO voters (name, cookie)
-            VALUES ($1, $2)
+    .query(`INSERT INTO voters (name, email, cookie)
+            VALUES ($1, $2, $3)
             RETURNING id
-            ;`, [name, cookie])
+            ;`, [name, email, cookie])
     .then((result) => {
       return result.rows[0];
     })
@@ -116,13 +117,13 @@ const db = require('../connection');
  *
  * @param {string} url
  * @return {Promise<{}>}
- *  recieve id and type
+ *  recieve id, type and description
  *
  */
  const getScheduleByURL = function (url) {
 
   return db
-  .query(`SELECT id, type FROM schedules
+  .query(`SELECT id, type, description FROM schedules
           WHERE url LIKE ($1)
           ;`, [url])
   .then((result) => {
@@ -139,15 +140,15 @@ const db = require('../connection');
  *
  * @param {string} userCookie
  * @return {Promise<{}>}
- *    [{schedules.id, url, type, voter_count}...]
+ *    [{schedules.id, url, type, description, voter_count}...]
  *
  */
  const getScheduleByUser = function (userCookie) {
 
   return db
-  .query(`SELECT schedules.id, url, type, COUNT(DISTINCT votes.voter_id) AS voter_count FROM schedules
+  .query(`SELECT schedules.id, url, type, description, COUNT(DISTINCT votes.voter_id) AS voter_count FROM schedules
           JOIN users ON schedules.user_id = users.id
-          JOIN dates ON schedules.id = dates.schedule_id
+          LEFT JOIN dates ON schedules.id = dates.schedule_id
           LEFT JOIN votes ON dates.id = votes.date_id
           WHERE users.cookie LIKE ($1)
           GROUP BY schedules.id
@@ -298,7 +299,7 @@ const db = require('../connection');
 };
 
 module.exports = {
-  addUser,
+  addUser, getUser,
   addVoter, getVoters, getVoterCount,
   addSchedule, getScheduleByURL, getScheduleByUser,
   addDates, getDates,

@@ -6,22 +6,21 @@
 
   <%- include('_partials/head') %>
 
-  <link rel="stylesheet" href="/styles/calendar.css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
-
-  <script defer src="/scripts/calendar_FE.js"></script>
   <script defer src="/scripts/invitee_FE.js"></script>
 </head>
 
 <body>
   <!-- Top nav bar (fixed) -->
-  <nav>
-    <span class="logo">ScheduleMe</span>
+  <nav class="navbar fixed-top navbar-expand-lg bg-light float-end px-2">
 
-    <span class="nav-input">
-      <label>Name:</label>
-      <input id="voter-name" type="text" name="user" placeholder="name" required />
-    </span>
+    <div class="form-group">
+      <label for="userName">Name</label>
+      <input type="text" class="form-control" id="userName" placeholder="Name" required>
+    </div>
+    <div class="form-group">
+      <label for="inputEmail">Email address</label>
+      <input type="email" class="form-control" id="inputEmail" placeholder="Enter email" required>
+    </div>
 
   </nav>
 
@@ -53,7 +52,7 @@
 
   <footer id="primary-footer">
     <div class="popup">
-      <button class="accept" type="submit" form="name-form"> accept </button>
+      <button class="accept" form="name-form"> accept </button>
     </div>
   </footer>
 

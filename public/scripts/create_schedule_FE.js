@@ -8,11 +8,11 @@ $(() => {
 
   $('#submit-schedule-button').on('click', function(event) {
     event.preventDefault();
-
-    console.log('sub button')
+    console.log('GLOBAL',datesGlobal)
 
     //required field or prompt once? dont NEED event type
     let eventtype = $("#event-type").val().trim()
+    let description = $("#event-description").val().trim()
     if (eventtype.length <= 0) {
       alert("please enter event type")
     } else {
@@ -20,11 +20,9 @@ $(() => {
       $.ajax({
         method: "POST",
         url: "/primary/create",
-        data: {dates: datesGlobal, eventType: eventtype},
+        data: {dates: datesGlobal, eventType: eventtype, eventDescription: description},
         success: function(data) {
-          console.log('inside post success', data)
-          $('.toast').toast('show');
-
+          window.location.href = '/primary';
         },
         error : function(XMLHttpRequest, textStatus, errorThrown) {
           console.log('my error is : ' + errorThrown);

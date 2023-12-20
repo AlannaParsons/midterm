@@ -70,20 +70,21 @@ $(() => {
   //opportunity for optomization. if rank is attached to date id, BE wouldnt need to access db
   $('.accept').on('click', function(event) {
     event.preventDefault(); //necessary here?
-
     //user validation. seperate?
     let arr = window.location.pathname.split('/');
     let uniq_url = arr[arr.length - 1];
 
-    let username = $("#voter-name").val().trim()
-    if (username.length <= 0) {
-      alert("please enter name")
+    let username = $("#userName").val().trim();
+    let email = $("#inputEmail").val().trim();
+    if (username.length <= 0 || email.length <= 0) {
+      alert("please enter user info")
     } else {
-     //values are ranked by postion in
+     //values are ranked by postion in array
+     console.log('posting')
       $.ajax({
         method: "POST",
         url: `/secondary/${uniq_url}`,
-        data: {dates: ranked_dates, name: username},
+        data: {dates: ranked_dates, name: username, email: email},
         success: function(data) {
           console.log('inside post success', data)
           window.location.href = '/secondary/ty';
