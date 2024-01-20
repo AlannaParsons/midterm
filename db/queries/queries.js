@@ -185,6 +185,30 @@ const db = require('../connection');
 };
 
 /**
+ * getUserBySchedule(schedule_id) - user who created schedule
+ *
+ * @param {string} url
+ * @return {Promise<{}>}
+ *  recieve id, type and description
+ *
+ */
+ const getUserBySchedule = function (schedule_id) {
+
+  return db
+  .query(`SELECT name, email FROM users
+          JOIN schedules ON schedules.user_id = users.id
+          WHERE schedules.id =($1)
+          ;`, [schedule_id])
+  .then((result) => {
+    return result.rows[0];
+  })
+  .catch(() => {
+    throw new Error('Error getting schedule url')
+  });
+
+};
+
+/**
  * getDates(schedule_id) - get all dates from given schedule id
  *
  * @param {number} schedule_id
@@ -299,7 +323,7 @@ const db = require('../connection');
 };
 
 module.exports = {
-  addUser, getUser,
+  addUser, getUser, getUserBySchedule,
   addVoter, getVoters, getVoterCount,
   addSchedule, getScheduleByURL, getScheduleByUser,
   addDates, getDates,

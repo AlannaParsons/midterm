@@ -42,11 +42,13 @@ router.get('/:uniq_url', async function (req, res) {
       return;
     }
 
+    const created_by = await dbQueries.getUserBySchedule(schedule.id);
     const dates = await dbQueries.getDates(schedule.id);
     const structuredDates = helpers.dateStructuring(dates)
-    console.log('structured?:', structuredDates)
     const templateVars = {
-      dates: structuredDates
+      dates: structuredDates,
+      schedule: schedule,
+      creator: created_by
     };
 
     res.render('invitee', templateVars)
@@ -60,9 +62,9 @@ router.get('/:uniq_url', async function (req, res) {
 
 
 router.post("/:uniq_url", async function(req, res) {
-  console.log('postingBE')
+
   try {
-    console.log('postingBE trying')
+
     const schedule = await dbQueries.getScheduleByURL(req.params.uniq_url);
     const dates = await dbQueries.getDates(schedule.id);
     const cookie = req.cookies.cookieName.toString();

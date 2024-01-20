@@ -39,13 +39,15 @@
       <div class="dates-container">
 
         <% for (let result of results) { %>
-          <div class="date-container" name="container" style="background-color:<%= result.style %>; width: <%= result.length %>;" >
+          <div class="date-container" name="container" style="background-color:<%= result.style %>;" >
             <div class="date-display"><%= result.utc %></div>
 
-            <span class="triangle triangle-left">
-              <span class="percentage"><%= `${result.percentage}%` %></span>
-            </span>
-            <div class="result-bar-shrink" style="width: <%= `${100 - result.percentage}%` %>;" >
+            <div class="result-bar-shrink">
+              <span class="triangle triangle-left">
+                <span class="percentage"><%= `${result.percentage}%` %></span>
+              </span>
+              <div class="result-bar" style="width: <%= `${100 - result.percentage}%` %>;" >
+              </div>
             </div>
           </div>
 
@@ -55,10 +57,6 @@
     </section>
 
   </main>
-
-  <!-- <footer id="primary-footer">
-    <button id="footer-button"> <i class="fa-solid fa-circle-chevron-up"></i> </button>
-  </footer> -->
 </body>
 
 </html>

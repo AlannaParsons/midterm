@@ -4,8 +4,9 @@
 ## Project
 with LHL Node Skeleton from Lighthouse Labs
 
-This is a scheduling app where in a primary user will set their schedule (for specific use case or have long term schedule) the schedule will generate a unique url to be sent to a secondary user (automate? twilio? contact list?). The secondary user can pick from available dates/times, currently this info will be sent back to the primary user and added to their local schedule (notifications?) ideally we will eventually integrate w google calendar (apple?)
+This is a scheduling app where in a primary user will set their schedule, the schedule will generate a unique url to be sent to a secondary user. The secondary user can rank options from available dates/times, currently this info will be sent back to the primary user where the primary user may check current results, ideally it will eventually integrate w google/apple calendar for proper scheduling
 
+to note: ranked results are based off total amount of dates given.
 
 ## Getting Started
 
@@ -58,53 +59,31 @@ primary user -> send schedule via 3rd party
 secondary user -> recieve schedule date options
 secondary user -> rank options & send to primary user -> recieved schedules options in ranked formation, ranked by secondary user votes
 
-## BUGS
-- error handling not working as expected
 
-
-## CURRENT
+## CURRENT WORKFLOW
 
 - file organization.
-  - seperate frontend and backend helpers
-  - split "userqueries", serverqueries??
-    - scss full screen/responsive naming? or seperate folder?
+  - seperate queries into seperate files
 
 primary
-
-  -should we prevent primary user from voting?
+  - should we prevent primary user from voting?
   - results ejs - length of bar determined by % of votes given. intheory 0% will squish content but it doesnt... future implications? why does this work
-  - once html inside date bars change, should fix bar being larger than triangle bug
   - could change date type to drop down
   - maybe take hover off inactive dates (on create calendar)
-  - dates are structured differently for primary and secondary UI... problem? adding complexity
 
 secondary
-  - error handling for invalid schedule url
-  - check if user primary (primary cannot vote) => dif page?
   - change addVotes to batching system to avoid errors
-
-  - focusing on mobile dev, create full screen layouts
+  - make responsive designs for mobile and computer layout
     - may add calendar to full screen to fill space
-
-
-## ADDRESS
-
-  - if sending to multiple people, how do we knpw when pole is over?
-    must hold results, add to database. expiry?? expiry set by last possible date of schedule or first
-  - could use internal calendar of phones?
-FEATURES
-  (add notes to top description?)
-  -- ranks are weighted by amount of dates in schedule
-  -happy path complete, add all error handling
-  - add try catch for async db calls
-  - add more security. no current BE protection?
 
 ## Considerations for future dev
   - create schedule event type input could change to drop down for ease
   - add expiry date (cannot vote past dates given?)
   -currently not handling timezones, dates stored in UTC
   - add time to dates as well
-  - add created date to events
+  - could use internal calendar of phones?
+  - add more security. no current BE protection?
+  - add security to posts
 
 ## Stack Requirements
 Your projects must use:
@@ -113,7 +92,7 @@ ES6 for server-side (NodeJS) code
 NodeJS
 Express
 RESTful routes
-One or more CSS or UI "framework"s:
+One or more CSS or UI "framework"s: bootstrap
 jQuery
 A CSS preprocessor such as SASS, Stylus, or PostCSS for styling -- or CSS Custom properties and no CSS preprocessor
 PostgreSQL and pg (with promises) for DBMS

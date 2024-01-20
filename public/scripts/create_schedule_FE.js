@@ -20,7 +20,9 @@ $(() => {
       $.ajax({
         method: "POST",
         url: "/primary/create",
-        data: {dates: datesGlobal, eventType: eventtype, eventDescription: description},
+        data: {dates: datesGlobal,
+              eventType: eventtype,
+              eventDescription: description},
         success: function(data) {
           window.location.href = '/primary';
         },
